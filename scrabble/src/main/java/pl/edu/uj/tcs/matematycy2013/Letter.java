@@ -2,22 +2,24 @@ package pl.edu.uj.tcs.matematycy2013;
 
 public class Letter {
 
-    public Letter(char theChar, int points) {
-        //TODO
+	private char letter;
+	private int points;
+	
+	public Letter(char theChar, int points) {
+        letter = theChar;
+        this.points = points;
     }
 
     public void setChar(char newChar) {
-        //TODO
+        letter = newChar;
     }
 
     public char getChar() {
-        //TODO
-        return ' ';
+        return letter;
     }
 
     public int getValue() {
-        //TODO
-        return 0;
+        return points;
     }
 
 }

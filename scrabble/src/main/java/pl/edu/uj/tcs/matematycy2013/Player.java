@@ -1,43 +1,52 @@
 package pl.edu.uj.tcs.matematycy2013;
 
+
 import java.util.Date;
 
 public class Player {
 
-    public Player(String nick) {
-        //TODO
-    }
+	private String nick;
+	private int score;
+	private Date timeLeft;
+	private Letter[] letters;
 
-    public Letter[] getLetters() {
-        //TODO
-        return null;
-    }
-
+	
+	public Player(String nick) {
+		this.nick = nick;
+		//temporary - we have to get random letters from bag, which doesn't exist yet
+		letters = new Letter[7];
+		for (int i=0; i<7; i++) {
+			letters[i] = new Letter('B', 3);
+		}
+	}
+	public Letter[] getLetters() {
+		return letters;
+	}
+		
     public int getScore() {
-        //TODO
-        return 0;
+        return score;
     }
-
+		
     public String getNick() {
-        //TODO
-        return "";
+        return nick;
     }
-
+		
     public Date getTimeLeft() {
-        //TODO
-        return null;
+        return timeLeft;
     }
-
+		
     public void updateScore(int update) {
-        //TODO
-    }
-
+		 score += update;
+	}
+		
     public void updateTime(int update) {
         //TODO
     }
-
+		
     public void setLetters(Letter[] newLetters) {
-        //TODO
-    }
-
+        //temporary - we update all letters?
+    	for (int i=0; i<7; i++) {
+    		letters[i] = newLetters[i];
+    	}
+    } 
 }
