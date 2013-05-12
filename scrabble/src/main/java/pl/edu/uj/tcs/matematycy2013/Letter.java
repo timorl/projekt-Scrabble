@@ -5,7 +5,7 @@ public class Letter {
 	private char letter;
 	private int points;
 	
-	public Letter(char theChar, int points) {
+    public Letter(char theChar, int points) {
         letter = theChar;
         this.points = points;
     }

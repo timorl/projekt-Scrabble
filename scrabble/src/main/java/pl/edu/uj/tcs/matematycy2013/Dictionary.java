@@ -1,10 +1,10 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.nio.file.Path;
+import java.io.InputStream;
 
 public class Dictionary {
 
-    public Dictionary(Path languageFile) {
+    public Dictionary(InputStream languageFile) {
         //TODO
     }
 
