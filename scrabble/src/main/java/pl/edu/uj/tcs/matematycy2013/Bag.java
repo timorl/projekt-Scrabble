@@ -1,6 +1,6 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.nio.file.Path;
+import java.io.InputStream;
 
 public class Bag {
 
@@ -8,7 +8,7 @@ public class Bag {
         //TODO
     }
 
-    public Bag(Path languageFile) {
+    public Bag(InputStream languageFile) {
         //TODO
     }
 
