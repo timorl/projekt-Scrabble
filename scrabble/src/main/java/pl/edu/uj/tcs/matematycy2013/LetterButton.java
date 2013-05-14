@@ -1,23 +1,33 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.awt.*;
 
-import javax.swing.*;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class LetterButton extends JButton {
 
 	private static final long serialVersionUID = 1L;
-	boolean hasLetter = false;
+	private boolean hasLetter = false;
+	private boolean isBlack=false;
 	private JLabel field;
 	private JLabel letter;
 	private JLabel points;
 	private Color fieldColor;
-	
+
 	public LetterButton(Cell c) {
 		format(c);
 		noLetter();
 	}
-	
+
+
 	private void format(Cell cell) {
 		setPreferredSize(new Dimension(60, 60));
 		setLayout(new GridBagLayout());
@@ -26,10 +36,11 @@ public class LetterButton extends JButton {
 		field = new JLabel();
 		String lbl;
 		switch (cell) {
-		case EMPTY: 
+		case EMPTY:
 			fieldColor = Color.YELLOW;
 			break;
 		case INVALID:
+			isBlack=true;
 			fieldColor = Color.BLACK;
 			setEnabled(false);
 			break;
@@ -73,16 +84,16 @@ public class LetterButton extends JButton {
 		field.setFont(new Font("Serif", Font.PLAIN, 10));
 		field.setHorizontalTextPosition(SwingConstants.CENTER);
 		field.setPreferredSize(new Dimension(60, 60));
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridheight = 1;
 		gbc.gridwidth = 1;
 		add(field, gbc);
-		
+
 		gbc.fill = GridBagConstraints.NORTHEAST;
 		gbc.anchor = GridBagConstraints.CENTER;
-		
+
 		letter = new JLabel();
 		letter.setFont(new Font("Serif", Font.PLAIN, 40));
 		letter.setPreferredSize(new Dimension(50,50));
@@ -90,7 +101,7 @@ public class LetterButton extends JButton {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		add(letter, gbc);
-		
+
 		points = new JLabel();
 		//points.setText(String.valueOf(pts));
 		points.setFont(new Font("Serif", Font.PLAIN, 10));
@@ -100,8 +111,9 @@ public class LetterButton extends JButton {
 		gbc.gridy = 1;
 		add(points, gbc);
 	}
-	
+
 	public void withLetter (Letter theChar) {
+		hasLetter=true;
 		char let = theChar.getChar();
 		int pts = theChar.getValue();
 		if (fieldColor == Color.BLACK) return;
@@ -112,13 +124,27 @@ public class LetterButton extends JButton {
 		points.setText(String.valueOf(pts));
 		setBackground(Color.LIGHT_GRAY);
 	}
-	
+
 	public void noLetter() {
+		hasLetter=false;
 		field.setVisible(true);
 		letter.setVisible(false);
 		points.setVisible(false);
 		setBackground(fieldColor);
 	}
-	
+
+	public boolean hasLetter() {
+		return hasLetter;
+	}
+	public boolean isBlack() {
+		return isBlack;
+	}
+
+	public Letter getLetter() {
+		if(!hasLetter)
+			return null;
+		return new Letter(letter.getText().charAt(0) , new Integer(points.getText()));
+	}
 
 }
+
