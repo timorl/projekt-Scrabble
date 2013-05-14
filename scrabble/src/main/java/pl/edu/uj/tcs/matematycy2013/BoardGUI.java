@@ -1,9 +1,9 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.awt.*;
+import java.awt.GridLayout;
 import java.util.Random;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 
 
@@ -19,21 +19,23 @@ public class BoardGUI extends JPanel {
 		this.cells = cells;
 		formatBoard();
 	}
-	
+
 	private void formatBoard() {
 		buttons = new LetterButton[size][size];
 		GridLayout layout = new GridLayout(size, size);
 		setLayout(layout);
+		BoardButtonMouseListener bbml=new BoardButtonMouseListener();
 		for (int i=0; i<size; i++) {
 			for (int j=0; j<size; j++) {
 				buttons[i][j] = new LetterButton(cells[i][j]);
+				buttons[i][j].addMouseListener(bbml);
 				add(buttons[i][j]);
 			}
 		}
 		setVisible(true);
-		
+
 	}
-	
+
 	public void randomChange() {
 		Random rg = new Random();
 		for (int i=0; i<size; i++) {
@@ -49,3 +51,4 @@ public class BoardGUI extends JPanel {
 	}
 
 }
+
