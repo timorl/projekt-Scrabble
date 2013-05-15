@@ -10,7 +10,7 @@ public class BagTest {
 
     @Test
     public void testBasic() throws IOException {
-        InputStream is = Dictionary.class.getResourceAsStream("letters-set.txt");
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("letters-set.txt");
         Bag bag = new Bag(is);
 
         assertEquals(8, bag.getSize());

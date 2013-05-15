@@ -10,7 +10,7 @@ public class DictionaryTest {
 
     @Test
     public void testBasic() throws IOException {
-        InputStream is = Dictionary.class.getResourceAsStream("words-pl.txt");
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("words-pl.txt");
         Alphabet alphabet = new Alphabet();
         alphabet.addLetters(new char[]{'a','ą','b','c','ć','d','e','ę','f','g','h','i','j','k','l','ł','m','n','ń','o','ó','p','r','s','ś','t','u','w','y','z','ź','ż','v','x','q'});
         Dictionary d = new Dictionary(is,alphabet);
