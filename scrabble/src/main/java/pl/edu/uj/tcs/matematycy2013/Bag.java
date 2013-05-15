@@ -11,11 +11,8 @@ public class Bag {
 
     private LinkedList<Letter> bag;
 
-    public Bag() {
-        bag = new LinkedList<Letter>();
-    }
-
     public Bag(InputStream stream) throws IOException {
+        bag = new LinkedList<Letter>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 
         String line;

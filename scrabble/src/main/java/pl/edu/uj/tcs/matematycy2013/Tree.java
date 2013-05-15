@@ -1,22 +1,16 @@
 package pl.edu.uj.tcs.matematycy2013;
 
 public class Tree {
-
+    public int counter = 0;
     private class Node {
 
         private Node[] childs;
+        private boolean accepted;
 
         private Node(int childsNumber) {
+            ++counter;
             childs = new Node[childsNumber];
-        }
-
-        private boolean isLeaf() {
-            for (int i = 0; i < childs.length; ++i) {
-                if (childs[i] != null) {
-                    return false;
-                }
-            }
-            return true;
+            accepted = false;
         }
     }
     private Node root;
@@ -33,7 +27,9 @@ public class Tree {
 
         while (index < word.length()) {
             int v = alphabet.getCharacterLabel(word.charAt(index));
-            if(v==-1) System.out.println(word.charAt(index));
+            if (v == -1) {
+                System.out.println(word.charAt(index));
+            }
             if (currentNode.childs[v] != null) {
                 currentNode = currentNode.childs[v];
             }
@@ -43,6 +39,9 @@ public class Tree {
                 currentNode = newNode;
             }
             ++index;
+            if(index == word.length()){
+                currentNode.accepted = true;
+            }
         }
     }
 
@@ -62,7 +61,7 @@ public class Tree {
             ++index;
         }
 
-        if (currentNode.isLeaf()) {
+        if (currentNode.accepted) {
             return true;
         }
 
