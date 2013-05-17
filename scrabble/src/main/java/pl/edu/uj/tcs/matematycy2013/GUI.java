@@ -20,8 +20,11 @@ public class GUI extends JFrame {
 	PlayerLetters playerLetters = new PlayerLetters(Cell.PLAYERLETTER);
 	PlayerLetters toExchange = new PlayerLetters(Cell.TOEXCHANGE);
 	
-	GUI (String name) {
+	Game game;
+	
+	GUI (String name, Game game) {
 		super(name);
+		this.game = game;
 	}
 	
 	
@@ -104,7 +107,7 @@ public class GUI extends JFrame {
 	 */
 	public static void main(String[] args) {
 		final int n = 12;
-		final GUI temp = new GUI("Scrabble");
+		final GUI temp = new GUI("Scrabble", null);
 		Random rg = new Random();
 		Cell[][] cel = new Cell[n][n];
 		for (int i=0; i<n; i++) {
