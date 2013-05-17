@@ -1,16 +1,21 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
-public class PlayersNicks extends JPanel {
+public class PlayersNicksGUI extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	JTextField[] players = new JTextField[2];
 	int active = 0;
-	
-	 public PlayersNicks(String nick1, String nick2) {
+
+	 public PlayersNicksGUI(String nick1, String nick2) {
 		 setPreferredSize(new Dimension(150,100));
 		players[0] = new JTextField(nick1);
 		players[1] = new JTextField(nick2);
@@ -21,24 +26,24 @@ public class PlayersNicks extends JPanel {
 		}
 		format();
 	 }
-	 
+
 	 private void format() {
 		 setLayout(new GridLayout(2,1));
 		 add(players[0]);
 		 add(players[1]);
 		 updateActive();
 	}
-	 
+
 	 private void updateActive() {
-		
+
 		players[active].setFont(new Font("Serif", Font.BOLD, 30 ));
 		players[active].setBackground(Color.YELLOW);
 		players[(active+1)%2].setFont(new Font("Serif", Font.PLAIN, 20));
 		players[(active+1)%2].setBackground(Color.WHITE);
-		
-		
+
+
 	 }
-	 
+
 	 public void changeActivePlayer() {
 		 active = (active +1) % 2;
 		 updateActive();

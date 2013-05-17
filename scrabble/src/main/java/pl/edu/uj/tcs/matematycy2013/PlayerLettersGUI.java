@@ -1,23 +1,24 @@
 package pl.edu.uj.tcs.matematycy2013;
 
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.FlowLayout;
+
+import javax.swing.JPanel;
 
 
-public class PlayerLetters extends JPanel {
+public class PlayerLettersGUI extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	LetterButton[] letters = new LetterButton[7];
-	
-	public PlayerLetters(Cell cell) {
+
+	public PlayerLettersGUI(Cell cell) {
 		setLayout(new FlowLayout());
 		for (int i=0; i<7; i++) {
 			letters[i] = new LetterButton(cell);
 			add(letters[i]);
 		}
 	}
-	
+
 	public void changePlayer(Letter[] newLetters) {
 		for (int i=0; i<7; i++) {
 			if (newLetters[i] != null) {

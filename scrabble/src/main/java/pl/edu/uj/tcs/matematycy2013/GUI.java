@@ -1,9 +1,14 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.Random;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
 public class GUI extends JFrame {
@@ -16,28 +21,28 @@ public class GUI extends JFrame {
 	JButton exchange = new JButton("EXCHANGE");
 	ClockGUI clock = new ClockGUI(100);
 	PointsGUI points = new PointsGUI();
-	PlayersNicks players;
-	PlayerLetters playerLetters = new PlayerLetters(Cell.PLAYERLETTER);
-	PlayerLetters toExchange = new PlayerLetters(Cell.TOEXCHANGE);
-	
+	PlayersNicksGUI players;
+	PlayerLettersGUI playerLetters = new PlayerLettersGUI(Cell.PLAYERLETTER);
+	PlayerLettersGUI toExchange = new PlayerLettersGUI(Cell.TOEXCHANGE);
+
 	Game game;
-	
+
 	GUI (String name, Game game) {
 		super(name);
 		this.game = game;
 	}
-	
-	
+
+
 	public void createGUI (int size, Cell[][] cells, String player1, String player2) {
 		panel = new JPanel(new GridBagLayout());
         this.getContentPane().add(panel);
-        
+
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.NORTHEAST;
 		gbc.anchor = GridBagConstraints.CENTER;
-		
+
 		board = new BoardGUI(size, cells);
 		gbc.insets = new Insets(2, 2, 2, 2);
         gbc.weightx = 1.0;
@@ -46,45 +51,45 @@ public class GUI extends JFrame {
         gbc.gridy = 0;
         gbc.gridheight = 10;
         gbc.gridwidth = 10;
-	
+
 		panel.add(board, gbc);
-		
+
 		gbc.gridheight = 1;
 		gbc.gridwidth = 1;
 		gbc.gridx = 11;
 		gbc.gridy = 0;
-		players = new PlayersNicks(player1, player2);
+		players = new PlayersNicksGUI(player1, player2);
 		panel.add(players, gbc);
-		
+
 		gbc.gridx = 11;
 		gbc.gridy = 1;
 		panel.add(clock, gbc);
-		
+
 		gbc.gridx = 11;
 		gbc.gridy = 2;
 		panel.add(points, gbc);
-		
+
 		gbc.gridx = 11;
 		gbc.gridy = 3;
 		panel.add(ok,gbc);
-		
+
 		gbc.gridx = 11;
 		gbc.gridy = 4;
 		panel.add(pass, gbc);
-		
+
 		gbc.gridx = 7;
 		gbc.gridy = 10;
 		panel.add(exchange, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 11;
 		gbc.gridwidth = 3;
 		panel.add(playerLetters, gbc);
-		
+
 		gbc.gridx = 5;
 		gbc.gridy = 11;
 		panel.add(toExchange, gbc);
-		
+
 		board.randomChange(); // temporary- to check changing letters
 		board.randomChange(); // the same
 		changeActivePlayer(new Player("")); // to check changeActivePlayer method
@@ -92,7 +97,7 @@ public class GUI extends JFrame {
 		pack();
 		setVisible(true);
 	}
-	
+
 	public void changeActivePlayer (Player player) {
 		playerLetters.changePlayer(player.getLetters());
 		toExchange.changePlayer(new Letter[7]);
@@ -100,8 +105,8 @@ public class GUI extends JFrame {
 		points.updateScore(player.getScore());
 		clock.updateClock(player.getTimeLeft());
 	}
-	
-	
+
+
 	/**
 	 * temporary - main -to show GUI
 	 */
@@ -116,10 +121,10 @@ public class GUI extends JFrame {
 				cel[i][j] = Cell.values()[h];
 			}
 		}
-		final Cell[][] c = cel; 
+		final Cell[][] c = cel;
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-            	
+
                 temp.createGUI(n,c, "Dudu", "Tomek");
             }
         });
