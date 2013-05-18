@@ -13,10 +13,12 @@ public class BoardGUI extends JPanel {
 	Cell[][] cells;
 	LetterButton[][] buttons;
 	int size;
+	ButtonMouseListener btnMseLnr;
 
-	public BoardGUI (int size, Cell[][] cells) {
+	public BoardGUI (int size, Cell[][] cells, ButtonMouseListener btnMseLnr) {
 		this.size = size;
 		this.cells = cells;
+		this.btnMseLnr=btnMseLnr;
 		formatBoard();
 	}
 
@@ -24,11 +26,10 @@ public class BoardGUI extends JPanel {
 		buttons = new LetterButton[size][size];
 		GridLayout layout = new GridLayout(size, size);
 		setLayout(layout);
-		BoardButtonMouseListener bbml=new BoardButtonMouseListener();
 		for (int i=0; i<size; i++) {
 			for (int j=0; j<size; j++) {
-				buttons[i][j] = new LetterButton(cells[i][j]);
-				buttons[i][j].addMouseListener(bbml);
+				buttons[i][j] = new LetterButton(cells[i][j], Position.BOARD, new LetterCoordinates(i, j));
+				buttons[i][j].addMouseListener(btnMseLnr);
 				add(buttons[i][j]);
 			}
 		}

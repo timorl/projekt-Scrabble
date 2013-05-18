@@ -3,10 +3,10 @@ package pl.edu.uj.tcs.matematycy2013;
 import java.util.Random;
 
 public class Board {
-	private int size;
-	private Cell[][] cells;
-	private Letter[][] letters;
-	
+	private final int size;
+	private final Cell[][] cells;
+	private final Letter[][] letters;
+
 	public Board () {
 		//temporary
 				size = 12;
@@ -33,7 +33,7 @@ public class Board {
 	public boolean isEmpty() {
 		for (int i=0; i<size; i++) {
 			for (int j=0; j<size; j++) {
-				if (letters[i][j] != null) return false; 
+				if (letters[i][j] != null) return false;
 			}
 		}
 		return true;
@@ -54,7 +54,7 @@ public class Board {
     		}
     	}
     }
-    
+
     public int getSize() {
 		return size;
 	}

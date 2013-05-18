@@ -1,23 +1,28 @@
 package pl.edu.uj.tcs.matematycy2013;
 
+
+
+
 public class Game {
-	
-	private Board board;
+
+	private final Board board;
 	private Turn turn;
-	private Player player1;
-	private Player player2;
-	private Bag bag;
+	private final Player player1;
+	private final Player player2;
+	private final Bag bag;
 	private Player currentPlayer;
 	private GUI gui;
-	
+
 	public Game (Config conf, String name1, String name2) {
 		//temporary - we don't have Config yet
-		gui = new GUI("Scrabble", this);
+		//gui = new GUI("Scrabble", this);
+		bag = new Bag();
 		board = new Board();
 		player1 = new Player(name1);
 		player2 = new Player(name2);
+		player1.setLetters(bag.getLetters(7));
+		player2.setLetters(bag.getLetters(7));
 		currentPlayer = player1;
-		bag = new Bag();
 		turn = new Turn (player1, board);
 	}
 	private void changeCurrentPlayer() {
@@ -26,9 +31,14 @@ public class Game {
 		} else currentPlayer = player1;
 	}
 	private void setGUIState() {
-		// switch (turn.state) -GUI method to activate/deactivate proper button
+		switch (turn.state) {
+		 case WORD: gui.wordState(); break;
+		 case EXCHANGE:	gui.exchangeState();break;
+		 case INVALID: gui.invalidState();break;
+		 case PASS: gui.passState();break;
+		 }
 	}
-	
+
 	public void putLetterOnTable (Letter toPut, int x, int y) {
 		turn.putLetterOnTable(toPut, x, y);
 		setGUIState();
@@ -45,6 +55,7 @@ public class Game {
 		turn.removeLetterFromBoard(toRemove, x, y);
 		setGUIState();
 	 }
+
 
     public void beginTurn() {
     	changeCurrentPlayer();
@@ -67,6 +78,14 @@ public class Game {
     public boolean isOver() {
         //TODO
         return false;
+    }
+
+    public Board getBoard() {
+    	return board;
+    }
+    //temporary; we need to tide up gui and game. maybe moving main to game is better
+    void setGUI(GUI gui){
+    	this.gui=gui;
     }
 
 }
