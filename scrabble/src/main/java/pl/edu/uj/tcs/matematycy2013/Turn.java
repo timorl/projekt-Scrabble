@@ -1,16 +1,18 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Turn {
-	
-	private ArrayList<LetterCoordinates> onBoard = new ArrayList<LetterCoordinates>();
-	private ArrayList<Letter> toExchange = new ArrayList<Letter>();
-	private ArrayList<Letter> letters = new ArrayList<Letter>();
-	private Letter[][] putLetters;
-	private Board board;
+
+	private final ArrayList<LetterCoordinates> onBoard = new ArrayList<LetterCoordinates>();
+	private final ArrayList<Letter> toExchange = new ArrayList<Letter>();
+	private final ArrayList<Letter> letters = new ArrayList<Letter>();
+	private final Letter[][] putLetters;
+	private final Board board;
 	public State state;
-	
+
 	public Turn (Player player, Board board) {
 		letters.addAll(Arrays.asList(player.getLetters()));
 		this.board = board;
@@ -26,7 +28,7 @@ public class Turn {
     	int p = board.getSize();
     	return (((x+a) %p) + p) % p;
     }
-    
+
     private boolean check (int X, int Y, LinkedList<LetterCoordinates> coors) {
     	int length = 1;
     	LetterCoordinates beg = coors.getFirst();
@@ -42,7 +44,7 @@ public class Turn {
     		return false;
     	}
     }
-    
+
     private int checkLine (int X, int Y, int x, int y, int length, LinkedList<LetterCoordinates> coors) {
     	x = inc (x, X);
     	y = inc (y, Y);
@@ -85,7 +87,7 @@ public class Turn {
     		else return false;
     	}
     }
-    
+
     public void setState (State state) {
     	this.state = state;
     }
@@ -116,7 +118,7 @@ public class Turn {
         	return;
         }
     }
-    
+
     public void addLetterToExchange(Letter toAdd) {
         if (letters.contains(toAdd)) {
         	letters.remove(toAdd);
@@ -145,7 +147,7 @@ public class Turn {
         state = setState();
         return;
     }
-    
+
     public Letter[][] getPutLetters() {
     	return putLetters;
     }

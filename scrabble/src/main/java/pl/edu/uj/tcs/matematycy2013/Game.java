@@ -6,18 +6,20 @@ public class Game {
 	private Turn turn;
 	private final Player player1;
 	private final Player player2;
-	//private Bag bag;
+	private final Bag bag;
 	private Player currentPlayer;
 	private final GUI gui;
 
 	public Game (Config conf, String name1, String name2) {
 		//temporary - we don't have Config yet
 		gui = new GUI("Scrabble", this);
+		bag = new Bag();
 		board = new Board();
 		player1 = new Player(name1);
 		player2 = new Player(name2);
+		player1.setLetters(bag.getLetters(7));
+		player2.setLetters(bag.getLetters(7));
 		currentPlayer = player1;
-		//bag = new Bag();
 		turn = new Turn (player1, board);
 	}
 	private void changeCurrentPlayer() {
@@ -67,6 +69,10 @@ public class Game {
     public boolean isOver() {
         //TODO
         return false;
+    }
+
+    public Board getBoard() {
+    	return board;
     }
 
 }

@@ -6,10 +6,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Bag {
 
-    private LinkedList<Letter> bag;
+    private final LinkedList<Letter> bag;
+
+    //temporary constructor
+    public Bag() {
+        bag = new LinkedList<Letter>();
+        Random rand =new Random();
+        for(int i=0;i<100;i++)
+        	bag.add(new Letter((char)(rand.nextInt(24)+'A'),i%10));
+    }
 
     public Bag(InputStream stream) throws IOException {
         bag = new LinkedList<Letter>();

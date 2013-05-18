@@ -4,14 +4,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class BoardButtonMouseListener extends MouseAdapter {
-	// last time clicked button
-	private LetterButton tmp;
+public class ButtonMouseListener extends MouseAdapter {
+	private LetterButton tmp; 	// last time clicked button
 
-	public BoardButtonMouseListener() {
+	public ButtonMouseListener() {
 		tmp=null;
 	}
-	public BoardButtonMouseListener(LetterButton tmp ) {
+	public ButtonMouseListener(LetterButton tmp ) {
 		this.tmp=tmp;
 	}
 

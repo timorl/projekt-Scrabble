@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,8 +21,8 @@ public class GUI extends JFrame {
 	ClockGUI clock = new ClockGUI(100);
 	PointsGUI points = new PointsGUI();
 	PlayersNicksGUI players;
-	PlayerLettersGUI playerLetters = new PlayerLettersGUI(Cell.PLAYERLETTER);
-	PlayerLettersGUI toExchange = new PlayerLettersGUI(Cell.TOEXCHANGE);
+	PlayerLettersGUI playerLetters;
+	PlayerLettersGUI toExchange;
 
 	Game game;
 
@@ -36,14 +35,14 @@ public class GUI extends JFrame {
 	public void createGUI (int size, Cell[][] cells, String player1, String player2) {
 		panel = new JPanel(new GridBagLayout());
         this.getContentPane().add(panel);
-
+        ButtonMouseListener btnMseLnr=new ButtonMouseListener();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.NORTHEAST;
 		gbc.anchor = GridBagConstraints.CENTER;
 
-		board = new BoardGUI(size, cells);
+		board = new BoardGUI(size, cells,btnMseLnr);
 		gbc.insets = new Insets(2, 2, 2, 2);
         gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
@@ -84,15 +83,17 @@ public class GUI extends JFrame {
 		gbc.gridx = 0;
 		gbc.gridy = 11;
 		gbc.gridwidth = 3;
+		playerLetters=new PlayerLettersGUI(game.getCurrentPlayer().getLetters(),btnMseLnr);
 		panel.add(playerLetters, gbc);
 
 		gbc.gridx = 5;
 		gbc.gridy = 11;
+		toExchange=new PlayerLettersGUI(Cell.TOEXCHANGE, btnMseLnr);
 		panel.add(toExchange, gbc);
 
 		board.randomChange(); // temporary- to check changing letters
-		board.randomChange(); // the same
-		changeActivePlayer(new Player("")); // to check changeActivePlayer method
+		//board.randomChange(); // the same
+		//changeActivePlayer(new Player("")); // to check changeActivePlayer method
 		setMinimumSize(new Dimension(700,600));
 		pack();
 		setVisible(true);
@@ -112,8 +113,8 @@ public class GUI extends JFrame {
 	 */
 	public static void main(String[] args) {
 		final int n = 12;
-		final GUI temp = new GUI("Scrabble", null);
-		Random rg = new Random();
+		final GUI temp = new GUI("Scrabble", new Game(new Config(),"Dudu","Tomek"));
+/*		Random rg = new Random();
 		Cell[][] cel = new Cell[n][n];
 		for (int i=0; i<n; i++) {
 			for (int j=0; j<n; j++) {
@@ -121,7 +122,8 @@ public class GUI extends JFrame {
 				cel[i][j] = Cell.values()[h];
 			}
 		}
-		final Cell[][] c = cel;
+*/
+		final Cell[][] c = temp.game.getBoard().getBoard();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 
