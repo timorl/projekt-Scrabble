@@ -28,7 +28,7 @@ public class BoardGUI extends JPanel {
 		setLayout(layout);
 		for (int i=0; i<size; i++) {
 			for (int j=0; j<size; j++) {
-				buttons[i][j] = new LetterButton(cells[i][j]);
+				buttons[i][j] = new LetterButton(cells[i][j], Position.BOARD, new LetterCoordinates(i, j));
 				buttons[i][j].addMouseListener(btnMseLnr);
 				add(buttons[i][j]);
 			}

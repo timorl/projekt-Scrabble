@@ -17,21 +17,27 @@ public class LetterButton extends JButton {
 	private static final long serialVersionUID = 1L;
 	private boolean hasLetter = false;
 	private boolean isBlack=false;
-	private final Cell type;
+	private final Position position;
 	private JLabel field;
 	private JLabel letter;
 	private JLabel points;
 	private Color fieldColor;
+	private LetterCoordinates coordinates;
 
-	public LetterButton(Cell c) {
-		type=c;
+	public LetterButton(Cell c, Position p) {
+		position=p;
 		format(c);
 		noLetter();
 	}
 
+	public LetterButton(Cell c, Position p, LetterCoordinates coordinates) {
+		this(c,p);
+		this.coordinates=coordinates;
+	}
+
 
 	private void format(Cell cell) {
-		setPreferredSize(new Dimension(60, 60));
+		setPreferredSize(new Dimension(50, 50));
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
@@ -147,8 +153,11 @@ public class LetterButton extends JButton {
 			return null;
 		return new Letter(letter.getText().charAt(0) , new Integer(points.getText()));
 	}
-	public Cell getType() {
-		return type;
+	public Position getPosition() {
+		return position;
+	}
+	public LetterCoordinates getLetterCoordinates() {
+		return coordinates;
 	}
 
 }

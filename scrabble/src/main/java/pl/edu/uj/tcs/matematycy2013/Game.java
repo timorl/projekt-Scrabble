@@ -1,5 +1,8 @@
 package pl.edu.uj.tcs.matematycy2013;
 
+
+
+
 public class Game {
 
 	private final Board board;
@@ -8,11 +11,11 @@ public class Game {
 	private final Player player2;
 	private final Bag bag;
 	private Player currentPlayer;
-	private final GUI gui;
+	private GUI gui;
 
 	public Game (Config conf, String name1, String name2) {
 		//temporary - we don't have Config yet
-		gui = new GUI("Scrabble", this);
+		//gui = new GUI("Scrabble", this);
 		bag = new Bag();
 		board = new Board();
 		player1 = new Player(name1);
@@ -28,7 +31,12 @@ public class Game {
 		} else currentPlayer = player1;
 	}
 	private void setGUIState() {
-		// switch (turn.state) -GUI method to activate/deactivate proper button
+		switch (turn.state) {
+		 case WORD: gui.wordState(); break;
+		 case EXCHANGE:	gui.exchangeState();break;
+		 case INVALID: gui.invalidState();break;
+		 case PASS: gui.passState();break;
+		 }
 	}
 
 	public void putLetterOnTable (Letter toPut, int x, int y) {
@@ -47,6 +55,7 @@ public class Game {
 		turn.removeLetterFromBoard(toRemove, x, y);
 		setGUIState();
 	 }
+
 
     public void beginTurn() {
     	changeCurrentPlayer();
@@ -73,6 +82,10 @@ public class Game {
 
     public Board getBoard() {
     	return board;
+    }
+    //temporary; we need to tide up gui and game. maybe moving main to game is better
+    void setGUI(GUI gui){
+    	this.gui=gui;
     }
 
 }

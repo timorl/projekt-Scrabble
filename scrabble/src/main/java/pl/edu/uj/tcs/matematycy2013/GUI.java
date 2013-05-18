@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,7 +37,7 @@ public class GUI extends JFrame {
 	public void createGUI (int size, Cell[][] cells, String player1, String player2) {
 		panel = new JPanel(new GridBagLayout());
         this.getContentPane().add(panel);
-        ButtonMouseListener btnMseLnr=new ButtonMouseListener();
+        ButtonMouseListener btnMseLnr=new ButtonMouseListener(game);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -70,7 +72,14 @@ public class GUI extends JFrame {
 
 		gbc.gridx = 11;
 		gbc.gridy = 3;
+		ok.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				game.beginTurn();
+			}
+		});
 		panel.add(ok,gbc);
+
 
 		gbc.gridx = 11;
 		gbc.gridy = 4;
@@ -83,15 +92,15 @@ public class GUI extends JFrame {
 		gbc.gridx = 0;
 		gbc.gridy = 11;
 		gbc.gridwidth = 3;
-		playerLetters=new PlayerLettersGUI(game.getCurrentPlayer().getLetters(),btnMseLnr);
+		playerLetters=new PlayerLettersGUI(game.getCurrentPlayer().getLetters(), btnMseLnr, Position.LETTERS);
 		panel.add(playerLetters, gbc);
 
 		gbc.gridx = 5;
 		gbc.gridy = 11;
-		toExchange=new PlayerLettersGUI(Cell.TOEXCHANGE, btnMseLnr);
+		toExchange=new PlayerLettersGUI(Cell.TOEXCHANGE, btnMseLnr, Position.EXCHANGE);
 		panel.add(toExchange, gbc);
 
-		board.randomChange(); // temporary- to check changing letters
+		//board.randomChange(); // temporary- to check changing letters
 		//board.randomChange(); // the same
 		//changeActivePlayer(new Player("")); // to check changeActivePlayer method
 		setMinimumSize(new Dimension(700,600));
@@ -107,22 +116,37 @@ public class GUI extends JFrame {
 		clock.updateClock(player.getTimeLeft());
 	}
 
+	void wordState() {
+		ok.setEnabled(true);
+		pass.setEnabled(false);
+		exchange.setEnabled(false);
+	}
+	void exchangeState() {
+		ok.setEnabled(false);
+		pass.setEnabled(false);
+		exchange.setEnabled(true);
+	}
+	void invalidState() {
+		ok.setEnabled(false);
+		pass.setEnabled(false);
+		exchange.setEnabled(false);
+	}
+	void passState() {
+		ok.setEnabled(false);
+		pass.setEnabled(true);
+		exchange.setEnabled(false);
+	}
+
 
 	/**
 	 * temporary - main -to show GUI
 	 */
 	public static void main(String[] args) {
 		final int n = 12;
-		final GUI temp = new GUI("Scrabble", new Game(new Config(),"Dudu","Tomek"));
-/*		Random rg = new Random();
-		Cell[][] cel = new Cell[n][n];
-		for (int i=0; i<n; i++) {
-			for (int j=0; j<n; j++) {
-				int h = rg.nextInt(7);
-				cel[i][j] = Cell.values()[h];
-			}
-		}
-*/
+		Game tmpG=new Game(new Config(),"Dudu","Tomek");
+		final GUI temp = new GUI("Scrabble", tmpG);
+		tmpG.setGUI(temp);
+
 		final Cell[][] c = temp.game.getBoard().getBoard();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {

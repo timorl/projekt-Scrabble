@@ -12,17 +12,17 @@ public class PlayerLettersGUI extends JPanel {
 	LetterButton[] letters = new LetterButton[7];
 	ButtonMouseListener btnMseLnr;
 
-	public PlayerLettersGUI(Cell cell, ButtonMouseListener btnMseLnr) {
+	public PlayerLettersGUI(Cell cell, ButtonMouseListener btnMseLnr, Position position) {
 		this.btnMseLnr=btnMseLnr;
 		setLayout(new FlowLayout());
 		for (int i=0; i<7; i++) {
-			letters[i] = new LetterButton(cell);
+			letters[i] = new LetterButton(cell,position);
 			letters[i].addMouseListener(btnMseLnr);
 			add(letters[i]);
 		}
 	}
-	public PlayerLettersGUI(Letter[] playerLetters, ButtonMouseListener btnMseLnr) {
-		this(Cell.PLAYERLETTER,btnMseLnr);
+	public PlayerLettersGUI(Letter[] playerLetters, ButtonMouseListener btnMseLnr, Position position) {
+		this(Cell.PLAYERLETTER,btnMseLnr,position);
 		for (int i=0; i<7; i++) {
 			if (playerLetters[i] != null) {
 				letters[i].withLetter(playerLetters[i]);
