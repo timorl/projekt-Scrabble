@@ -147,6 +147,9 @@ public class LetterButton extends JButton {
 	public boolean isBlack() {
 		return isBlack;
 	}
+	public void setBlack (boolean flag) {
+		isBlack = flag;
+	}
 
 	public Letter getLetter() {
 		if(!hasLetter)

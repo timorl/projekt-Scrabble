@@ -36,6 +36,18 @@ public class BoardGUI extends JPanel {
 		setVisible(true);
 
 	}
+	
+	public void prepare (Board board) {
+		Letter[][] lets = board.getLetters();
+		for (int i=0; i<size; i++) {
+			for (int j=0; j<size; j++) {
+				if (lets[i][j] != null) {
+					buttons[i][j].setEnabled(false);
+					buttons[i][j].setBlack(true);
+				}
+			}
+		}
+	}
 
 	public void randomChange() {
 		Random rg = new Random();

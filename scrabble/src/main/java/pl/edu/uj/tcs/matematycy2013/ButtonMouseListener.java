@@ -39,42 +39,54 @@ public class ButtonMouseListener extends MouseAdapter {
 		if(tmp!=null && !X.hasLetter() && !X.isBlack()){
 			tmpPos=tmp.getPosition();
 			XPos=X.getPosition();
-			//move letter if move is valid
-			if(moveLetter(X)) {
-				//moving letter from player letters
-				if(tmpPos==Position.LETTERS) {
-					if(XPos==Position.BOARD) {
-						LetterCoordinates co=X.getLetterCoordinates();
-						game.putLetterOnTable(X.getLetter(), co.x, co.y);
-					}
-					if(XPos==Position.EXCHANGE) {
-						game.addLetterToExchange(X.getLetter());
-					}
+			moveLetter(X);
+			//moving letter from player letters
+			if(tmpPos==Position.LETTERS) {
+				if(XPos==Position.BOARD) {
+					LetterCoordinates co=X.getLetterCoordinates();
+					game.putLetterOnTable(X.getLetter(), co.x, co.y);
 				}
-				//moving letter from board
-				if(tmpPos==Position.BOARD && XPos==Position.LETTERS) {
+				if(XPos==Position.EXCHANGE) {
+					game.addLetterToExchange(X.getLetter());
+				}
+			}
+			//moving letter from board
+			if(tmpPos==Position.BOARD) {
+				if (XPos == Position.LETTERS) {
 					LetterCoordinates co=tmp.getLetterCoordinates();
 					game.removeLetterFromBoard(tmp.getLetter(), co.x, co.y);
 				}
+				if (XPos == Position.BOARD) {
+					LetterCoordinates from=tmp.getLetterCoordinates();
+					LetterCoordinates to = X.getLetterCoordinates();
+					game.changeLettersOnBoard(X.getLetter(), from.x, from.y, to.x, to.y);
+				}
+				if (XPos == Position.EXCHANGE) {
+					LetterCoordinates from = tmp.getLetterCoordinates();
+					game.fromBoardToExchange(X.getLetter(), from.x, from.y);
+				}
+			}
 
-				//moving letter from exchange
-				if(tmpPos==Position.EXCHANGE && XPos==Position.LETTERS) {
+			//moving letter from exchange
+			if(tmpPos==Position.EXCHANGE) {
+				if (XPos == Position.LETTERS) {
 					game.removeLetterFromExchange(X.getLetter());
 				}
-				tmp=null;
+				if (XPos == Position.BOARD) {
+					LetterCoordinates to = X.getLetterCoordinates();
+					game.fromExchangeToBoard(X.getLetter(), to.x, to.y);
+				}
 			}
+			tmp = null;
+			
 		}
 	}
 
-	private boolean moveLetter(LetterButton X) {
+	private void moveLetter(LetterButton X) {
+		Letter tmpLetter=tmp.getLetter();
+		X.withLetter(tmpLetter);
+		tmp.setContentAreaFilled(true);
+		tmp.noLetter();
 
-		if( tmpPos==Position.LETTERS || (tmpPos==Position.EXCHANGE && XPos!=Position.BOARD ) ||	(tmpPos==Position.BOARD  && XPos==Position.LETTERS	) ) {
-				Letter tmpLetter=tmp.getLetter();
-				X.withLetter(tmpLetter);
-				tmp.setContentAreaFilled(true);
-				tmp.noLetter();
-				return true;
-		}
-		return false;
 	}
 }
