@@ -55,6 +55,21 @@ public class Game {
 		turn.removeLetterFromBoard(toRemove, x, y);
 		setGUIState();
 	 }
+	 public void changeLettersOnBoard(Letter toChange, int fromx, int fromy, int tox, int toy) {
+		 turn.removeLetterFromBoard(toChange, fromx, fromy);
+		 turn.putLetterOnTable(toChange, tox, toy);
+		 setGUIState();
+	 }
+	 public void fromBoardToExchange(Letter toChange, int x, int y) {
+		 turn.removeLetterFromBoard(toChange, x, y);
+		 turn.addLetterToExchange(toChange);
+		 setGUIState();
+	 }
+	 public void fromExchangeToBoard (Letter toChange, int x, int y) {
+		 turn.removeLetterFromExchange(toChange);
+		 turn.putLetterOnTable(toChange, x, y);
+		 setGUIState();
+	 }
 
 
     public void beginTurn() {
@@ -64,7 +79,9 @@ public class Game {
     }
 
     public void finaliseTurn() {
-        //TODO
+        //temporary - counting points to add
+    	board.commit(turn);
+    	gui.prepareBoard(board);
     }
 
     public Player getCurrentPlayer() {

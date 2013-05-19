@@ -75,6 +75,7 @@ public class GUI extends JFrame {
 		ok.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				game.finaliseTurn();
 				game.beginTurn();
 			}
 		});
@@ -135,6 +136,10 @@ public class GUI extends JFrame {
 		ok.setEnabled(false);
 		pass.setEnabled(true);
 		exchange.setEnabled(false);
+	}
+	
+	public void prepareBoard(Board trueBoard) {
+		board.prepare(trueBoard);
 	}
 
 

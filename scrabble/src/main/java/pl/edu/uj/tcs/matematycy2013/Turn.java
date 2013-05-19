@@ -109,14 +109,10 @@ public class Turn {
         	onBoard.add(new LetterCoordinates(x, y));
         	putLetters[x][y] = toPut;
         }
-        if (isValid()) {
-        	state = setState();
-        	return;
-        }
-        else {
-        	state = State.INVALID;
-        	return;
-        }
+        
+    	state = setState();
+    	return;
+        
     }
 
     public void addLetterToExchange(Letter toAdd) {
