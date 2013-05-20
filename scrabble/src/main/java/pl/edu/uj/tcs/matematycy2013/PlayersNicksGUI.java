@@ -23,6 +23,7 @@ public class PlayersNicksGUI extends JPanel {
 			players[i].setMinimumSize(new Dimension(150, 50));
 			players[i].setFont(new Font("Serif", Font.PLAIN, 30));
 			players[i].setHorizontalAlignment(JTextField.CENTER);
+			players[i].setEditable(false);
 		}
 		format();
 	 }
@@ -39,8 +40,7 @@ public class PlayersNicksGUI extends JPanel {
 		players[active].setFont(new Font("Serif", Font.BOLD, 30 ));
 		players[active].setBackground(Color.YELLOW);
 		players[(active+1)%2].setFont(new Font("Serif", Font.PLAIN, 20));
-		players[(active+1)%2].setBackground(Color.WHITE);
-
+		players[(active+1)%2].setBackground(Color.LIGHT_GRAY);
 
 	 }
 

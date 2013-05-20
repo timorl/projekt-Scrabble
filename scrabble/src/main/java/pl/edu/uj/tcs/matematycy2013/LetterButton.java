@@ -91,7 +91,7 @@ public class LetterButton extends JButton {
 		}
 		field.setFont(new Font("Serif", Font.PLAIN, 10));
 		field.setHorizontalTextPosition(SwingConstants.CENTER);
-		field.setPreferredSize(new Dimension(60, 60));
+		field.setPreferredSize(new Dimension(50, 50));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -103,8 +103,8 @@ public class LetterButton extends JButton {
 		gbc.anchor = GridBagConstraints.CENTER;
 
 		letter = new JLabel();
-		letter.setFont(new Font("Serif", Font.PLAIN, 40));
-		letter.setPreferredSize(new Dimension(50,50));
+		letter.setFont(new Font("Serif", Font.PLAIN, 30));
+		letter.setPreferredSize(new Dimension(35,35));
 		letter.setBackground(Color.LIGHT_GRAY);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -112,9 +112,9 @@ public class LetterButton extends JButton {
 
 		points = new JLabel();
 		//points.setText(String.valueOf(pts));
-		points.setFont(new Font("Serif", Font.PLAIN, 10));
+		points.setFont(new Font("Serif", Font.PLAIN, 13));
 		points.setBackground(Color.LIGHT_GRAY);
-		points.setPreferredSize(new Dimension(10,10));
+		points.setPreferredSize(new Dimension(15,15));
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		add(points, gbc);
