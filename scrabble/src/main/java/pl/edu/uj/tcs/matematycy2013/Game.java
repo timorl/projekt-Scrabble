@@ -75,6 +75,7 @@ public class Game {
     public void beginTurn() {
     	changeCurrentPlayer();
         turn = new Turn (currentPlayer, board);
+        setGUIState();
         gui.changeActivePlayer(currentPlayer);
     }
 
