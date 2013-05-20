@@ -8,6 +8,10 @@ import java.io.InputStreamReader;
 public class Dictionary {
 
     private Tree tree;
+    
+    //needed for testing only
+    public Dictionary(){
+    }
 
     public Dictionary(InputStream stream, Alphabet alphabet) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
@@ -22,6 +26,9 @@ public class Dictionary {
     }
 
     public boolean checkWord(String toCheck) {
+        if(tree == null){
+            return true;
+        }
         return tree.search(toCheck);
     }
 }
