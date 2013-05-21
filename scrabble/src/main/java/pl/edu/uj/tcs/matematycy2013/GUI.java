@@ -154,7 +154,7 @@ public class GUI extends JFrame {
 	 * temporary - main -to show GUI
 	 */
 	public static void main(String[] args) {
-		final int n = 12;
+		final int n = 17;
 		Game tmpG=new Game(new Config(),"Dudu","Tomek");
 		final GUI temp = new GUI("Scrabble", tmpG);
 		tmpG.setGUI(temp);

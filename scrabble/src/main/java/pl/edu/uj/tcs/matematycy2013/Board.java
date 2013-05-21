@@ -1,6 +1,10 @@
 package pl.edu.uj.tcs.matematycy2013;
 
 import java.util.Random;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class Board {
 
@@ -23,6 +27,26 @@ public class Board {
             }
         }
 
+    }
+
+    public Board(InputStream stream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+
+        String line = reader.readLine();
+        size = Integer.parseInt(line);
+        cells = new Cell[size][size];
+        letters = new Letter[size][size];
+        for ( int i = 0; i < size; i++ ) {
+            for( int j = 0; j < size; j++ ) {
+                cells[i][j] = Cell.EMPTY;
+            }
+        }
+        Cell[] vals = Cell.values();
+        while ((line = reader.readLine()) != null) {
+            String[] t = line.split(" ");
+            cells[Integer.parseInt(t[0])][Integer.parseInt(t[1])] = vals[Integer.parseInt(t[2])];
+        }
+        reader.close();
     }
 
     public Board(Cell[][] cells, int size) {
