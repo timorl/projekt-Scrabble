@@ -19,7 +19,11 @@ public class Game {
         //gui = new GUI("Scrabble", this);
         dictionary = new Dictionary();
         bag = new Bag();
-        board = new Board();
+        try {
+            board = new Board( Thread.currentThread().getContextClassLoader().getResourceAsStream("defaultBoard.txt") );
+        } catch (Exception e) {
+            board = new Board();
+        }
         player1 = new Player(name1);
         player2 = new Player(name2);
         player1.setLetters(bag.getLetters(7));
