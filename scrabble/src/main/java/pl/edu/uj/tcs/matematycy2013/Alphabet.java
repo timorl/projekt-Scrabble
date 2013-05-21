@@ -1,6 +1,10 @@
 package pl.edu.uj.tcs.matematycy2013;
 
 import java.util.LinkedList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class Alphabet {
 
@@ -8,6 +12,23 @@ public class Alphabet {
 
     public Alphabet() {
         alphabet = new LinkedList<Character>();
+    }
+
+    public Alphabet(InputStream is) throws IOException {
+        alphabet = new LinkedList<Character>();
+        LinkedList<Character> aLToAdd = new LinkedList<Character>();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+        String line;
+        while ( (line = reader.readLine()) != null ) {
+            if(line.charAt(0) != '*') {
+                aLToAdd.add( line.charAt(0) );
+            }
+        }
+        char[] toAdd = new char[aLToAdd.size()];
+        for ( int i = 0; i < toAdd.length; i++ ) {
+            toAdd[i] = aLToAdd.get(i).charValue();
+        }
+        addLetters(toAdd);
     }
 
     public void addLetters(char[] letters) {
