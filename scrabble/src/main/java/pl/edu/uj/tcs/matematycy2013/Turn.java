@@ -140,6 +140,10 @@ public class Turn {
         return onBoard;
     }
 
+    public ArrayList<Letter> getToExchange() {
+        return toExchange;
+    }
+
     public void putLetterOnTable(Letter toPut, int x, int y) {
         if (letters.contains(toPut)) {
             letters.remove(toPut);

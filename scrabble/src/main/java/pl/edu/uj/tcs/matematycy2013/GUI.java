@@ -88,6 +88,13 @@ public class GUI extends JFrame {
 
 		gbc.gridx = 7;
 		gbc.gridy = 10;
+		exchange.addActionListener(new ActionListener() {
+                        
+			public void actionPerformed(ActionEvent e) {
+				game.finaliseTurn();
+				game.beginTurn();
+			}
+		});
 		panel.add(exchange, gbc);
 
 		gbc.gridx = 0;

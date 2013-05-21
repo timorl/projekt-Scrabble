@@ -1,6 +1,7 @@
 package pl.edu.uj.tcs.matematycy2013;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game {
 
@@ -271,6 +272,26 @@ public class Game {
         }
     }
 
+    public void exchangeLetters() {
+        ArrayList<Letter> toExch = turn.getToExchange();
+        ArrayList<Letter> playerLet = new ArrayList<Letter>( Arrays.asList( currentPlayer.getLetters() ) );
+        for ( Letter let : toExch ) {
+            playerLet.remove(let);
+        }
+        playerLet.addAll( Arrays.asList( bag.getLetters( toExch.size() ) ) );
+        playerLet = new ArrayList<Letter>( playerLet );
+        Letter[]  pL = new Letter[7];
+        for ( int i = 0; i < 7; i++ ) {
+            pL[i] = playerLet.get(i);
+        }
+        currentPlayer.setLetters( pL );
+        pL = new Letter[toExch.size()];
+        for ( int i = 0; i < pL.length; i++ ) {
+            pL[i] = toExch.get(i);
+        }
+        bag.addLetters( pL );
+    }
+
     public void beginTurn() {
     	changeCurrentPlayer();
         turn = new Turn (currentPlayer, board);
@@ -279,8 +300,14 @@ public class Game {
     }
 
     public void finaliseTurn() {
-        //temporary - counting points to add
-        board.commit(turn);
+        switch ( turn.state ) {
+            case EXCHANGE:
+                exchangeLetters();
+                break;
+            case WORD:
+                board.commit(turn);
+                break;
+        }
         gui.prepareBoard(board);
     }
 
