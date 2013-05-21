@@ -3,14 +3,16 @@ package pl.edu.uj.tcs.matematycy2013;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class Config {
 
-    private Board board;
-    private Dictionary dictionary;
-    private Player player1;
-    private Player player2;
-    private Bag bag;
+    private InputStream board;
+    private boolean boardIsTorus;
+    private InputStream dictionary;
+    private InputStream bag;
+    private String player1;
+    private String player2;
     //prolly not int, placeholder
     private int maxTime;
 
@@ -18,54 +20,35 @@ public class Config {
     }
 
     public void setDefaultBoard() {
-        try {
-            board = new Board( Thread.currentThread().getContextClassLoader().getResourceAsStream("defaultBoard.txt"), false );
-        } catch (Exception e) {
-            System.out.println("Default board not working, everything will crash now, brace for impact.");
-        }
+        board = Thread.currentThread().getContextClassLoader().getResourceAsStream("defaultBoard.txt");
+        boardIsTorus = false;
     }
 
-    public void setBoard(String pathToFile, boolean isTorus) {
-        try {
-            board = new Board(new FileInputStream(pathToFile), isTorus);
-        } catch (Exception e) {
-            System.out.println("Provided file not found or just not working, falling back to default.");
-            setDefaultBoard();
-        }
+    public void setBoard(String pathToFile, boolean isTorus) throws FileNotFoundException {
+        board = new FileInputStream(pathToFile);
+        boardIsTorus = isTorus;
     }
 
     //if standard, then dictName is the language name (pl or en), else it's a path
-    public void setDictionary(String dictName, boolean standard) {
+    public void setDictionary(String dictName, boolean standard) throws FileNotFoundException {
         if (standard) {
-            try {
-                dictionary = new Dictionary( Thread.currentThread().getContextClassLoader().getResourceAsStream("words-" + dictName + ".txt"), new Alphabet(Thread.currentThread().getContextClassLoader().getResourceAsStream("letters-" + dictName + ".txt") ) );
-            } catch (Exception e) {
-                System.out.println("Either dictionary or bag file not working, brace for failure.");
-            }
+            dictionary = Thread.currentThread().getContextClassLoader().getResourceAsStream("words-" + dictName + ".txt");
         } else {
-            //Not really possible, since we need an alphabet.
+            dictionary = new FileInputStream(dictName);
         }
     }
 
     public void setPlayerNames(String name1, String name2) {
-        player1 = new Player(name1);
-        player2 = new Player(name2);
+        player1 = name1;
+        player2 = name2;
     }
 
     //if standard, then bagName is the language name (pl or en), else it's a path
-    public void setBag(String bagName, boolean standard) {
+    public void setBag(String bagName, boolean standard) throws FileNotFoundException {
         if (standard) {
-            try {
-                bag = new Bag( Thread.currentThread().getContextClassLoader().getResourceAsStream("letters-" + bagName + ".txt") );
-            } catch (Exception e) {
-                System.out.println("Bag file not working, brace for failure.");
-            }
+            bag = Thread.currentThread().getContextClassLoader().getResourceAsStream("letters-" + bagName + ".txt");
         } else {
-            try {
-                bag = new Bag( new FileInputStream(bagName) );
-            } catch (Exception e) {
-                System.out.println("Bag file not working, brace for failure.");
-            }
+            bag = new FileInputStream(bagName);
         }
     }
 
@@ -75,23 +58,27 @@ public class Config {
         maxTime = time;
     }
 
-    public Board getBoard() {
+    public InputStream getBoardStream() {
         return board;
     }
 
-    public Dictionary getDictionary() {
+    public boolean getBoardTorus() {
+        return boardIsTorus;
+    }
+
+    public InputStream getDictionaryStream() {
         return dictionary;
     }
 
-    public Player getPlayer1() {
+    public String getPlayer1() {
         return player1;
     }
 
-    public Player getPlayer2() {
+    public String getPlayer2() {
         return player2;
     }
 
-    public Bag getBag() {
+    public InputStream getBagStream() {
         return bag;
     }
 
