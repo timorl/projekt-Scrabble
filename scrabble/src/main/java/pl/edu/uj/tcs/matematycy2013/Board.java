@@ -117,4 +117,7 @@ public class Board {
     public Letter[][] getLetters() {
         return letters;
     }
+    public boolean isTorus() {
+    	return isTorus;
+    }
 }

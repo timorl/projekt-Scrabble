@@ -4,13 +4,12 @@ package pl.edu.uj.tcs.matematycy2013;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 public class LetterButton extends JButton {
 
@@ -89,34 +88,42 @@ public class LetterButton extends JButton {
 		default:
 			break;
 		}
+		
+		
 		field.setFont(new Font("Serif", Font.PLAIN, 10));
 		field.setHorizontalTextPosition(SwingConstants.CENTER);
-		field.setPreferredSize(new Dimension(40, 40));
+		//field.setPreferredSize(new Dimension(40, 40));
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridheight = 1;
-		gbc.gridwidth = 1;
+		gbc.gridheight = 100;
+		gbc.gridwidth = 100;
 		add(field, gbc);
 
-		gbc.fill = GridBagConstraints.NORTHEAST;
+		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.CENTER;
 
 		letter = new JLabel();
 		letter.setFont(new Font("Serif", Font.PLAIN, 25));
-		letter.setPreferredSize(new Dimension(30,30));
+		letter.setHorizontalTextPosition(SwingConstants.CENTER);
+		//letter.setPreferredSize(new Dimension(30,30));
 		letter.setBackground(Color.LIGHT_GRAY);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.gridheight = 75;
+		gbc.gridwidth = 75;
 		add(letter, gbc);
 
 		points = new JLabel();
 		//points.setText(String.valueOf(pts));
-		points.setFont(new Font("Serif", Font.PLAIN, 10));
+		points.setFont(new Font("Serif", Font.PLAIN, 12));
+		points.setHorizontalTextPosition(SwingConstants.CENTER);
 		points.setBackground(Color.LIGHT_GRAY);
-		points.setPreferredSize(new Dimension(10,10));
-		gbc.gridx = 1;
-		gbc.gridy = 1;
+		//points.setPreferredSize(new Dimension(10,10));
+		gbc.gridheight = 25;
+		gbc.gridwidth = 25;
+		gbc.gridx = 75;
+		gbc.gridy = 75;
 		add(points, gbc);
 	}
 
