@@ -14,11 +14,13 @@ public class BoardGUI extends JPanel {
 	LetterButton[][] buttons;
 	int size;
 	ButtonMouseListener btnMseLnr;
+	boolean isTorus;
 
-	public BoardGUI (int size, Cell[][] cells, ButtonMouseListener btnMseLnr) {
-		this.size = size;
-		this.cells = cells;
+	public BoardGUI (Board board, ButtonMouseListener btnMseLnr) {
+		this.size = board.getSize();
+		this.cells = board.getBoard();
 		this.btnMseLnr=btnMseLnr;
+		isTorus = board.isTorus();
 		formatBoard();
 	}
 
@@ -31,6 +33,18 @@ public class BoardGUI extends JPanel {
 				buttons[i][j] = new LetterButton(cells[i][j], Position.BOARD, new LetterCoordinates(i, j));
 				buttons[i][j].addMouseListener(btnMseLnr);
 				add(buttons[i][j]);
+			}
+		}
+		if (!isTorus) {
+			for (int i=0; i<size; i+=size-1) {
+				for (int j=0; j<size; j++) {
+					buttons[i][j].setVisible(false);
+				}
+			}
+			for (int j=0; j<size; j+=size-1) {
+				for (int i=0; i<size; i++) {
+					buttons[i][j].setVisible(false);
+				}
 			}
 		}
 		setVisible(true);

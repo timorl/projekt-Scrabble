@@ -13,6 +13,7 @@ public class Game {
     private final Bag bag;
     private Player currentPlayer;
     private GUI gui;
+    private ChangePlayerGUI changeGui;
 
     public Game(Config conf, String name1, String name2) {
         //temporary - we don't have Config yet
@@ -30,6 +31,7 @@ public class Game {
         player2.setLetters(bag.getLetters(7));
         currentPlayer = player1;
         turn = new Turn(player1, board);
+        changeGui = new ChangePlayerGUI(this);
     }
 
     private void changeCurrentPlayer() {
@@ -297,10 +299,9 @@ public class Game {
     }
 
     public void beginTurn() {
-    	changeCurrentPlayer();
         turn = new Turn (currentPlayer, board);
         setGUIState();
-        gui.changeActivePlayer(currentPlayer);
+        gui.showGamePanel(true);
     }
 
     public void finaliseTurn() {
@@ -311,8 +312,19 @@ public class Game {
             case WORD:
                 board.commit(turn);
                 break;
+            default : break;
         }
         gui.prepareBoard(board);
+        gui.showGamePanel(false);
+        Player last = currentPlayer;
+        changeCurrentPlayer();
+        gui.changeActivePlayer(last, currentPlayer);
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+
+            	changeGui.showChangePlayerGUI(currentPlayer);
+            }
+        });
     }
 
     public Player[] getPlayers() {
@@ -337,6 +349,9 @@ public class Game {
 
     public Board getBoard() {
         return board;
+    }
+    public int getBagSize() {
+    	return bag.getSize();
     }
     //temporary; we need to tide up gui and game. maybe moving main to game is better
 

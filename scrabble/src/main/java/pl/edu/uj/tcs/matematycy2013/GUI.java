@@ -21,7 +21,7 @@ public class GUI extends JFrame {
 	JButton pass = new JButton("PASS");
 	JButton exchange = new JButton("EXCHANGE");
 	ClockGUI clock = new ClockGUI(100);
-	PointsGUI points = new PointsGUI();
+	BagSizeGUI bag;
 	PlayersNicksGUI players;
 	PlayerLettersGUI playerLetters;
 	PlayerLettersGUI toExchange;
@@ -44,7 +44,7 @@ public class GUI extends JFrame {
 		gbc.fill = GridBagConstraints.NORTHEAST;
 		gbc.anchor = GridBagConstraints.CENTER;
 
-		board = new BoardGUI(size, cells,btnMseLnr);
+		board = new BoardGUI(game.getBoard(),btnMseLnr);
 		gbc.insets = new Insets(2, 2, 2, 2);
         gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
@@ -65,10 +65,11 @@ public class GUI extends JFrame {
 		gbc.gridx = 11;
 		gbc.gridy = 1;
 		panel.add(clock, gbc);
-
+		
+		bag = new BagSizeGUI(game.getBagSize());
 		gbc.gridx = 11;
 		gbc.gridy = 2;
-		panel.add(points, gbc);
+		panel.add(bag, gbc);
 
 		gbc.gridx = 11;
 		gbc.gridy = 3;
@@ -76,7 +77,6 @@ public class GUI extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				game.finaliseTurn();
-				game.beginTurn();
 			}
 		});
 		panel.add(ok,gbc);
@@ -92,7 +92,6 @@ public class GUI extends JFrame {
                         
 			public void actionPerformed(ActionEvent e) {
 				game.finaliseTurn();
-				game.beginTurn();
 			}
 		});
 		panel.add(exchange, gbc);
@@ -108,19 +107,15 @@ public class GUI extends JFrame {
 		toExchange=new PlayerLettersGUI(Cell.TOEXCHANGE, btnMseLnr, Position.EXCHANGE);
 		panel.add(toExchange, gbc);
 
-		//board.randomChange(); // temporary- to check changing letters
-		//board.randomChange(); // the same
-		//changeActivePlayer(new Player("")); // to check changeActivePlayer method
 		setMinimumSize(new Dimension(700,600));
 		pack();
 		setVisible(true);
 	}
 
-	public void changeActivePlayer (Player player) {
+	public void changeActivePlayer (Player last, Player player) {
 		playerLetters.changePlayer(player.getLetters());
 		toExchange.changePlayer(new Letter[7]);
-		players.changeActivePlayer();
-		points.updateScore(player.getScore());
+		players.changeActivePlayer(last.getScore(), player.getScore());
 		clock.updateClock(player.getTimeLeft());
 	}
 
@@ -147,6 +142,9 @@ public class GUI extends JFrame {
 	
 	public void prepareBoard(Board trueBoard) {
 		board.prepare(trueBoard);
+	}
+	public void showGamePanel(boolean flag) {
+		panel.setVisible(flag);
 	}
 
 

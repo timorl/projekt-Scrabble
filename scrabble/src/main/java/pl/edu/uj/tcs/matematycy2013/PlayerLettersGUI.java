@@ -14,7 +14,8 @@ public class PlayerLettersGUI extends JPanel {
 
 	public PlayerLettersGUI(Cell cell, ButtonMouseListener btnMseLnr, Position position) {
 		this.btnMseLnr=btnMseLnr;
-		setLayout(new FlowLayout());
+		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		
 		for (int i=0; i<7; i++) {
 			letters[i] = new LetterButton(cell,position);
 			letters[i].addMouseListener(btnMseLnr);
