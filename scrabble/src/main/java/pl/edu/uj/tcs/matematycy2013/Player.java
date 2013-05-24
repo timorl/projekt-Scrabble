@@ -8,6 +8,7 @@ public class Player {
 	private int score;
 	private int timeLeft;
 	private final Letter[] letters;
+	private int passCounter=0;
 
 
 	public Player(String nick, int initialTime) {
@@ -40,7 +41,7 @@ public class Player {
 	}
 
     public void updateTime() {
-        timeLeft--;
+        --timeLeft;
     }
 
     public void setLetters(Letter[] newLetters) {
@@ -49,4 +50,22 @@ public class Player {
     		letters[i] = newLetters[i];
     	}
     }
+    public void pass() {
+    	passCounter++;
+    }
+    public int getPassCounter() {
+    	return passCounter;
+    }
+    public void clearPassCounter() {
+    	passCounter=0;
+    }
+    public boolean hasTime() {
+    	return timeLeft>0;
+    }
+	public boolean hasLetter() {
+		for(Letter l : letters)
+			if(l!=null)
+				return true;
+		return false;
+	}
 }

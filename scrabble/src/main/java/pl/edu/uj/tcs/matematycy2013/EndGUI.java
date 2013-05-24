@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 @SuppressWarnings("serial")
 public class EndGUI extends JFrame{
 
-	private final JLabel message = new JLabel("The winner is: ");
+	private final JLabel message;
 	private final JLabel winner = new JLabel();
 	private final JLabel score = new JLabel();
 	private final JPanel panel = new JPanel();
@@ -24,20 +24,24 @@ public class EndGUI extends JFrame{
 	private final JButton restart = new JButton ("RESTART");
 	private final JButton newGame = new JButton ("NEW GAME");
 
-	public EndGUI (Player player) {
+
+	public EndGUI (Player player, String gameResult) {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension (500, 500));
+		message = new JLabel(gameResult);
 		message.setFont(new Font ("Serif", Font.BOLD, 30));
 		message.setHorizontalAlignment(SwingConstants.CENTER);
 
-		winner.setText(player.getNick());
-		winner.setFont(new Font ("Serif", Font.BOLD, 40));
-		winner.setHorizontalAlignment(SwingConstants.CENTER);
+		if(gameResult.equals("The winner is: ")) {
+			winner.setText(player.getNick());
+			winner.setFont(new Font ("Serif", Font.BOLD, 40));
+			winner.setHorizontalAlignment(SwingConstants.CENTER);
 
-		String text = "Scored: " + player.getScore() + " points!";
-		score.setText(text);
-		score.setFont(new Font ("Serif", Font.BOLD, 30));
-		score.setHorizontalAlignment(SwingConstants.CENTER);
+			String text = "Scored: " + player.getScore() + " points!";
+			score.setText(text);
+			score.setFont(new Font ("Serif", Font.BOLD, 30));
+			score.setHorizontalAlignment(SwingConstants.CENTER);
+		}
 
 		restart.addActionListener(new ActionListener() {
 
@@ -67,16 +71,19 @@ public class EndGUI extends JFrame{
 
 		setLayout(new GridLayout (4,1));
 		add(message);
-		add(winner);
-		add(score);
-		add(panel);
+		if(gameResult.equals("The winner is: ")) {
+			add(winner);
+			add(score);
+			add(panel);
+		}
 	}
+
 	public void showEndGUI() {
 		pack();
 		setVisible(true);
 	}
 
-	// main to tests only
+/*	// main to tests only
 	public static void main(String[] args) {
 
 		final Game tmpG=new Game(new Config(20*60),"Dudu","Tomek");
@@ -91,5 +98,5 @@ public class EndGUI extends JFrame{
         });
 
 	}
-
+*/
 }

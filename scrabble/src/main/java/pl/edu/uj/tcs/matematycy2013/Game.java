@@ -19,6 +19,7 @@ public class Game {
     private GUI gui;
     private final ChangePlayerGUI changeGui;
     private final Timer timer;
+    private EndGUI endGUI;
 
     public Game(Config conf, String name1, String name2) {
         //temporary - we don't have Config yet
@@ -42,6 +43,11 @@ public class Game {
         	public void actionPerformed(ActionEvent e) {
 				currentPlayer.updateTime();
 				gui.updateClock();
+				if(currentPlayer.getTimeLeft()<=0) {
+					turn.timeLeft();
+					finaliseTurn();
+				}
+
 			}
 		});
     }
@@ -323,26 +329,71 @@ public class Game {
         switch ( turn.state ) {
             case EXCHANGE:
                 exchangeLetters();
+                currentPlayer.clearPassCounter();
                 break;
             case WORD:
                 board.commit(turn);
+                currentPlayer.clearPassCounter();
                 break;
+            case PASS:
+            	currentPlayer.pass();
             default : break;
         }
+
+        //two passes from each player in a row or bag is empty and some player has used last letter
+        if( isEnded() ){
+        	finaliseGame();
+        	return;
+        }
+
+
         gui.prepareBoard(board);
-        gui.showGamePanel(false);
         Player last = currentPlayer;
         changeCurrentPlayer();
-        gui.changeActivePlayer(last, currentPlayer);
+
+        //player has time
+        if(currentPlayer.hasTime()) {
+            gui.showGamePanel(false);
+            gui.changeActivePlayer(last, currentPlayer);
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+
+                	changeGui.showChangePlayerGUI(currentPlayer);
+                }
+            });
+        }
+        //player has no time
+        else {
+        	changeCurrentPlayer();
+        	//current player has no time or passed
+        	if(!currentPlayer.hasTime() || currentPlayer.getPassCounter()==2)
+        		finaliseGame();
+        	else
+        		beginTurn();
+        }
+    }
+
+    private boolean isEnded() {
+		return (player1.getPassCounter()==2 && player2.getPassCounter()==2) || (bag.getSize()==0 && (!player1.hasLetter() || !player2.hasLetter()));
+	}
+
+	private void finaliseGame() {
+        gui.showGamePanel(false);
+        if(player1.getScore()>player2.getScore())
+        	endGUI=new EndGUI(player1,"The winner is: ");
+        if(player1.getScore()<player2.getScore())
+        	endGUI=new EndGUI(player2,"The winner is: ");
+        if(player1.getScore()==player2.getScore())
+        	endGUI=new EndGUI(null,"The match ended in a draw.");
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 
-            	changeGui.showChangePlayerGUI(currentPlayer);
+            	endGUI.showEndGUI();
             }
         });
-    }
+	}
 
-    public Player[] getPlayers() {
+	public Player[] getPlayers() {
         Player[] players = new Player[2];
         players[0] = player1;
         players[1] = player2;
