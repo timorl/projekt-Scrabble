@@ -329,11 +329,13 @@ public class Game {
         switch ( turn.state ) {
             case EXCHANGE:
                 exchangeLetters();
-                currentPlayer.clearPassCounter();
+                player1.clearPassCounter();
+                player2.clearPassCounter();
                 break;
             case WORD:
                 board.commit(turn);
-                currentPlayer.clearPassCounter();
+                player1.clearPassCounter();
+                player2.clearPassCounter();
                 break;
             case PASS:
             	currentPlayer.pass();

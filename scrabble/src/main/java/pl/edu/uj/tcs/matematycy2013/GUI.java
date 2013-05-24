@@ -171,7 +171,7 @@ public class GUI extends JFrame {
 	 */
 	public static void main(String[] args) {
 		final int n = 17;
-		Game tmpG=new Game(new Config(13),"Dudu","Tomek");
+		Game tmpG=new Game(new Config(60),"Dudu","Tomek");
 		final GUI temp = new GUI("Scrabble", tmpG);
 		tmpG.setGUI(temp);
 
