@@ -1,7 +1,11 @@
 package pl.edu.uj.tcs.matematycy2013;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import javax.swing.Timer;
 
 public class Game {
 
@@ -13,7 +17,8 @@ public class Game {
     private final Bag bag;
     private Player currentPlayer;
     private GUI gui;
-    private ChangePlayerGUI changeGui;
+    private final ChangePlayerGUI changeGui;
+    private final Timer timer;
 
     public Game(Config conf, String name1, String name2) {
         //temporary - we don't have Config yet
@@ -25,13 +30,20 @@ public class Game {
         } catch (Exception e) {
             board = new Board();
         }
-        player1 = new Player(name1);
-        player2 = new Player(name2);
+        player1 = new Player(name1,conf.getMaxTime());
+        player2 = new Player(name2,conf.getMaxTime());
         player1.setLetters(bag.getLetters(7));
         player2.setLetters(bag.getLetters(7));
         currentPlayer = player1;
         turn = new Turn(player1, board);
         changeGui = new ChangePlayerGUI(this);
+        timer=new Timer(1000,new ActionListener() {
+
+        	public void actionPerformed(ActionEvent e) {
+				currentPlayer.updateTime();
+				gui.updateClock();
+			}
+		});
     }
 
     private void changeCurrentPlayer() {
@@ -301,10 +313,13 @@ public class Game {
     public void beginTurn() {
         turn = new Turn (currentPlayer, board);
         setGUIState();
+        gui.updateClock(currentPlayer.getTimeLeft());
         gui.showGamePanel(true);
+        timer.start();
     }
 
     public void finaliseTurn() {
+    	timer.stop();
         switch ( turn.state ) {
             case EXCHANGE:
                 exchangeLetters();
@@ -353,9 +368,11 @@ public class Game {
     public int getBagSize() {
     	return bag.getSize();
     }
-    //temporary; we need to tide up gui and game. maybe moving main to game is better
 
+    //temporary; we need to tide up gui and game. maybe moving main to game is better
+    //timer has to start after gui reference was initialized
     void setGUI(GUI gui) {
         this.gui = gui;
+        timer.start();
     }
 }
