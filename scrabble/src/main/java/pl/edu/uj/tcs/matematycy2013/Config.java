@@ -1,9 +1,8 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class Config {
 
@@ -13,10 +12,11 @@ public class Config {
     private InputStream bag;
     private String player1;
     private String player2;
-    //prolly not int, placeholder
     private int maxTime;
 
-    public Config() {
+    public Config(int maxTime) {
+    	//temporary, to check timer
+    	this.maxTime=maxTime;
     }
 
     public void setDefaultBoard() {
@@ -52,9 +52,7 @@ public class Config {
         }
     }
 
-    //prolly not int, that's a placeholder
     public void setMaxTime(int time) {
-        //temporary
         maxTime = time;
     }
 

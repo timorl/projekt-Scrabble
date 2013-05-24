@@ -20,7 +20,7 @@ public class GUI extends JFrame {
 	JButton ok = new JButton("OK");
 	JButton pass = new JButton("PASS");
 	JButton exchange = new JButton("EXCHANGE");
-	ClockGUI clock = new ClockGUI(100);
+	ClockGUI clock ;
 	BagSizeGUI bag;
 	PlayersNicksGUI players;
 	PlayerLettersGUI playerLetters;
@@ -31,6 +31,7 @@ public class GUI extends JFrame {
 	GUI (String name, Game game) {
 		super(name);
 		this.game = game;
+		clock=new ClockGUI(game.getCurrentPlayer().getTimeLeft());
 	}
 
 
@@ -65,7 +66,7 @@ public class GUI extends JFrame {
 		gbc.gridx = 11;
 		gbc.gridy = 1;
 		panel.add(clock, gbc);
-		
+
 		bag = new BagSizeGUI(game.getBagSize());
 		gbc.gridx = 11;
 		gbc.gridy = 2;
@@ -89,7 +90,7 @@ public class GUI extends JFrame {
 		gbc.gridx = 7;
 		gbc.gridy = 10;
 		exchange.addActionListener(new ActionListener() {
-                        
+
 			public void actionPerformed(ActionEvent e) {
 				game.finaliseTurn();
 			}
@@ -139,7 +140,7 @@ public class GUI extends JFrame {
 		pass.setEnabled(true);
 		exchange.setEnabled(false);
 	}
-	
+
 	public void prepareBoard(Board trueBoard) {
 		board.prepare(trueBoard);
 	}
@@ -147,13 +148,19 @@ public class GUI extends JFrame {
 		panel.setVisible(flag);
 	}
 
+	public void updateClock() {
+		clock.updateClock();
+	}
 
+	public void updateClock(int time) {
+		clock.updateClock(time);
+	}
 	/**
 	 * temporary - main -to show GUI
 	 */
 	public static void main(String[] args) {
 		final int n = 17;
-		Game tmpG=new Game(new Config(),"Dudu","Tomek");
+		Game tmpG=new Game(new Config(60*20),"Dudu","Tomek");
 		final GUI temp = new GUI("Scrabble", tmpG);
 		tmpG.setGUI(temp);
 
