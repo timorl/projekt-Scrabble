@@ -81,10 +81,17 @@ public class GUI extends JFrame {
 			}
 		});
 		panel.add(ok,gbc);
+		ok.setEnabled(false);
 
 
 		gbc.gridx = 11;
 		gbc.gridy = 4;
+		pass.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				game.finaliseTurn();
+			}
+		});
 		panel.add(pass, gbc);
 
 		gbc.gridx = 7;
@@ -96,6 +103,7 @@ public class GUI extends JFrame {
 			}
 		});
 		panel.add(exchange, gbc);
+		exchange.setEnabled(false);
 
 		gbc.gridx = 0;
 		gbc.gridy = 11;
@@ -144,6 +152,9 @@ public class GUI extends JFrame {
 	public void prepareBoard(Board trueBoard) {
 		board.prepare(trueBoard);
 	}
+	public void setLook(Board trueBoard) {
+		board.setLook(trueBoard);
+	}
 	public void showGamePanel(boolean flag) {
 		panel.setVisible(flag);
 	}
@@ -160,7 +171,7 @@ public class GUI extends JFrame {
 	 */
 	public static void main(String[] args) {
 		final int n = 17;
-		Game tmpG=new Game(new Config(60*20),"Dudu","Tomek");
+		Game tmpG=new Game(new Config(13),"Dudu","Tomek");
 		final GUI temp = new GUI("Scrabble", tmpG);
 		tmpG.setGUI(temp);
 

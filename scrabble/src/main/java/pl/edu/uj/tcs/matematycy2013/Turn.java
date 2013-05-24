@@ -17,11 +17,7 @@ public class Turn {
         letters.addAll(Arrays.asList(player.getLetters()));
         this.board = board;
         putLetters = new Letter[board.getSize()][board.getSize()];
-        for (int i = 0; i < board.getSize(); i++) {
-            for (int j = 0; j < board.getSize(); j++) {
-                putLetters[i][j] = null;
-            }
-        }
+
         state = State.PASS;
     }
 
@@ -187,4 +183,17 @@ public class Turn {
     public Letter[][] getPutLetters() {
         return putLetters;
     }
+
+	public void timeLeft() {
+		for(LetterCoordinates lco : onBoard) {
+			letters.add(putLetters[lco.x][lco.y]);
+			putLetters[lco.x][lco.y]=null;
+		}
+		onBoard.clear();
+		for(Letter l : toExchange) {
+			letters.add(l);
+		}
+		toExchange.clear();
+		state=setState();
+	}
 }

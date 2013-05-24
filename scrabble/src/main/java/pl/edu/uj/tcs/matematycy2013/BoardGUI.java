@@ -50,7 +50,7 @@ public class BoardGUI extends JPanel {
 		setVisible(true);
 
 	}
-	
+
 	public void prepare (Board board) {
 		Letter[][] lets = board.getLetters();
 		for (int i=0; i<size; i++) {
@@ -58,6 +58,23 @@ public class BoardGUI extends JPanel {
 				if (lets[i][j] != null) {
 					buttons[i][j].setEnabled(false);
 					buttons[i][j].setBlack(true);
+				}
+			}
+		}
+	}
+
+	public void setLook(Board board) {
+		Letter[][] lets = board.getLetters();
+		for (int i=0; i<size; i++) {
+			for (int j=0; j<size; j++) {
+				if (lets[i][j] != null) {
+					buttons[i][j].setEnabled(false);
+					buttons[i][j].setBlack(true);
+				}
+				else  {
+					buttons[i][j].setEnabled(true);
+					buttons[i][j].setBlack(false);
+					buttons[i][j].noLetter();
 				}
 			}
 		}
