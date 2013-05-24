@@ -187,6 +187,7 @@ public class Turn {
 	public void timeLeft() {
 		for(LetterCoordinates lco : onBoard) {
 			letters.add(putLetters[lco.x][lco.y]);
+			putLetters[lco.x][lco.y]=null;
 		}
 		onBoard.clear();
 		for(Letter l : toExchange) {

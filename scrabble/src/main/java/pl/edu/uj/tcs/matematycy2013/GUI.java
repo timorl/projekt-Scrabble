@@ -152,6 +152,9 @@ public class GUI extends JFrame {
 	public void prepareBoard(Board trueBoard) {
 		board.prepare(trueBoard);
 	}
+	public void setLook(Board trueBoard) {
+		board.setLook(trueBoard);
+	}
 	public void showGamePanel(boolean flag) {
 		panel.setVisible(flag);
 	}
@@ -168,7 +171,7 @@ public class GUI extends JFrame {
 	 */
 	public static void main(String[] args) {
 		final int n = 17;
-		Game tmpG=new Game(new Config(10),"Dudu","Tomek");
+		Game tmpG=new Game(new Config(13),"Dudu","Tomek");
 		final GUI temp = new GUI("Scrabble", tmpG);
 		tmpG.setGUI(temp);
 

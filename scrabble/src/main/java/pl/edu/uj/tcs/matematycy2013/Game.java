@@ -44,10 +44,10 @@ public class Game {
 				currentPlayer.updateTime();
 				gui.updateClock();
 				if(currentPlayer.getTimeLeft()<=0) {
-					turn.timeLeft();
-					finaliseTurn();
+			        turn.timeLeft();
+			        gui.setLook(board);
+			        finaliseTurn();
 				}
-
 			}
 		});
     }
