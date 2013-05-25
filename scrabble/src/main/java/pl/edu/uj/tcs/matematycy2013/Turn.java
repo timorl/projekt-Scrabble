@@ -12,9 +12,11 @@ public class Turn {
     private final Letter[][] putLetters;
     private final Board board;
     public State state;
+    private int bagSize;
 
-    public Turn(Player player, Board board) {
+    public Turn(Player player, Board board, int bagSize) {
         letters.addAll(Arrays.asList(player.getLetters()));
+        this.bagSize = bagSize;
         this.board = board;
         putLetters = new Letter[board.getSize()][board.getSize()];
 
@@ -123,7 +125,7 @@ public class Turn {
             }
         }
         else {
-            if (onBoard.isEmpty()) {
+            if (onBoard.isEmpty() && toExchange.size() <= bagSize) {
                 return State.EXCHANGE;
             }
             else {
@@ -182,6 +184,16 @@ public class Turn {
 
     public Letter[][] getPutLetters() {
         return putLetters;
+    }
+    
+    public void usedLettersToExchange() {
+    	for (int i=0; i<board.getSize(); i++) {
+    		for (int j=0; j<board.getSize(); j++) {
+    			if (putLetters[i][j] != null) {
+    				toExchange.add(putLetters[i][j]);
+    			}
+    		}
+    	}
     }
 
 	public void timeLeft() {
