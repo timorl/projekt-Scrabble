@@ -166,6 +166,9 @@ public class GUI extends JFrame {
 	public void updateClock(int time) {
 		clock.updateClock(time);
 	}
+	public void updateBagSize(int i) {
+		bag.actualize(i);
+	}
 	/**
 	 * temporary - main -to show GUI
 	 */

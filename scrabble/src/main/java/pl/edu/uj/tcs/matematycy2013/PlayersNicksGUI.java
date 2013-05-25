@@ -49,8 +49,8 @@ public class PlayersNicksGUI extends JPanel {
 		players[(active+1)%2].setFont(new Font("Serif", Font.PLAIN, 20));
 		players[(active+1)%2].setOpaque(false);
 		
-		points[active].setText("   " + new Integer(p1).toString() + "   ");
-		points[(active+1)%2].setText("   " + new Integer(p2).toString() + "   ");
+		points[active].setText("   " + new Integer(p2).toString() + "   ");
+		points[(active+1)%2].setText("   " + new Integer(p1).toString() + "   ");
 		
 	 }
 

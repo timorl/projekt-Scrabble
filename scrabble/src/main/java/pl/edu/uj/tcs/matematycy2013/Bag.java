@@ -38,9 +38,9 @@ public class Bag {
     }
 
     public Letter[] getLetters(int amount) {
-        if (amount > getSize()) {
+        /*if (amount > getSize()) {
             return null;
-        }
+        }*/
 
         Letter[] letters = new Letter[amount];
         Collections.shuffle(bag);

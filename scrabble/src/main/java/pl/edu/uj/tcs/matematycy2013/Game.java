@@ -36,7 +36,7 @@ public class Game {
         player1.setLetters(bag.getLetters(7));
         player2.setLetters(bag.getLetters(7));
         currentPlayer = player1;
-        turn = new Turn(player1, board);
+        turn = new Turn(player1, board, bag.getSize());
         changeGui = new ChangePlayerGUI(this);
         timer=new Timer(1000,new ActionListener() {
 
@@ -296,7 +296,7 @@ public class Game {
         }
     }
 
-    public void exchangeLetters() {
+    public void exchangeLetters(boolean backToBag) {
         ArrayList<Letter> toExch = turn.getToExchange();
         ArrayList<Letter> playerLet = new ArrayList<Letter>( Arrays.asList( currentPlayer.getLetters() ) );
         for ( Letter let : toExch ) {
@@ -309,15 +309,17 @@ public class Game {
             pL[i] = playerLet.get(i);
         }
         currentPlayer.setLetters( pL );
-        pL = new Letter[toExch.size()];
-        for ( int i = 0; i < pL.length; i++ ) {
-            pL[i] = toExch.get(i);
+        if (backToBag) {
+	        pL = new Letter[toExch.size()];
+	        for ( int i = 0; i < pL.length; i++ ) {
+	            pL[i] = toExch.get(i);
+	        }
+	        bag.addLetters( pL );
         }
-        bag.addLetters( pL );
     }
 
     public void beginTurn() {
-        turn = new Turn (currentPlayer, board);
+        turn = new Turn (currentPlayer, board, bag.getSize());
         setGUIState();
         gui.updateClock(currentPlayer.getTimeLeft());
         gui.showGamePanel(true);
@@ -328,12 +330,14 @@ public class Game {
     	timer.stop();
         switch ( turn.state ) {
             case EXCHANGE:
-                exchangeLetters();
+                exchangeLetters(true);
                 player1.clearPassCounter();
                 player2.clearPassCounter();
                 break;
             case WORD:
                 board.commit(turn);
+                turn.usedLettersToExchange();
+                exchangeLetters(false);
                 player1.clearPassCounter();
                 player2.clearPassCounter();
                 break;
@@ -341,6 +345,8 @@ public class Game {
             	currentPlayer.pass();
             default : break;
         }
+        gui.updateBagSize(bag.getSize());
+        currentPlayer.updateScore(countScore(turn));
 
         //two passes from each player in a row or bag is empty and some player has used last letter
         if( isEnded() ){
@@ -350,7 +356,7 @@ public class Game {
 
 
         gui.prepareBoard(board);
-        Player last = currentPlayer;
+        final Player last = currentPlayer;
         changeCurrentPlayer();
 
         //player has time
@@ -360,18 +366,27 @@ public class Game {
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
 
-                	changeGui.showChangePlayerGUI(currentPlayer);
+                	changeGui.showChangePlayerGUI(currentPlayer, last, false);
                 }
             });
         }
         //player has no time
         else {
+        	final Player last2 = currentPlayer;
         	changeCurrentPlayer();
+        	gui.showGamePanel(false);
         	//current player has no time or passed
         	if(!currentPlayer.hasTime() || currentPlayer.getPassCounter()==2)
         		finaliseGame();
-        	else
-        		beginTurn();
+        	else {
+        		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+
+                    	changeGui.showChangePlayerGUI(currentPlayer, last2, true);
+                    }
+                });
+        	}
+        		
         }
     }
 
