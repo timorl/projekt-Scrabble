@@ -327,7 +327,7 @@ public class Game {
     }
 
     public void finaliseTurn() {
-    	timer.stop();
+    	timer.stop();    	
         switch ( turn.state ) {
             case EXCHANGE:
                 exchangeLetters(true);
@@ -335,18 +335,25 @@ public class Game {
                 player2.clearPassCounter();
                 break;
             case WORD:
-                board.commit(turn);
-                turn.usedLettersToExchange();
-                exchangeLetters(false);
-                player1.clearPassCounter();
-                player2.clearPassCounter();
+            	int score = countScore(turn);
+            	if (score < 0) {
+            		turn.timeLeft(); // timeLeft clears Turn?
+            		currentPlayer.pass(); 
+            	} else {
+	                board.commit(turn);
+	                currentPlayer.updateScore(score);
+	                turn.usedLettersToExchange();
+	                exchangeLetters(false);
+	                player1.clearPassCounter();
+	                player2.clearPassCounter();
+            	}
                 break;
             case PASS:
             	currentPlayer.pass();
+            	break;
             default : break;
         }
         gui.updateBagSize(bag.getSize());
-        currentPlayer.updateScore(countScore(turn));
 
         //two passes from each player in a row or bag is empty and some player has used last letter
         if( isEnded() ){
@@ -372,9 +379,11 @@ public class Game {
         }
         //player has no time
         else {
+        	gui.showGamePanel(false);
+        	gui.changeActivePlayer(last, currentPlayer);
         	final Player last2 = currentPlayer;
         	changeCurrentPlayer();
-        	gui.showGamePanel(false);
+        	gui.changeActivePlayer(last2, currentPlayer);
         	//current player has no time or passed
         	if(!currentPlayer.hasTime() || currentPlayer.getPassCounter()==2)
         		finaliseGame();
