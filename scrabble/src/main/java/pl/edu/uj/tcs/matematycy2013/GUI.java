@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -169,24 +170,5 @@ public class GUI extends JFrame {
 	public void updateBagSize(int i) {
 		bag.actualize(i);
 	}
-	/**
-	 * temporary - main -to show GUI
-	 */
-	public static void main(String[] args) {
-		final int n = 17;
-		Game tmpG=new Game(new Config(60),"Dudu","Tomek");
-		final GUI temp = new GUI("Scrabble", tmpG);
-		tmpG.setGUI(temp);
-
-		final Cell[][] c = temp.game.getBoard().getBoard();
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-
-                temp.createGUI(n,c, "Dudu", "Tomek");
-            }
-        });
-
-	}
-
 }
 

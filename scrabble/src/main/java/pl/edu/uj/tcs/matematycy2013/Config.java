@@ -13,10 +13,9 @@ public class Config {
     private String player1;
     private String player2;
     private int maxTime;
+    private int size;
 
-    public Config(int maxTime) {
-    	//temporary, to check timer
-    	this.maxTime=maxTime;
+    public Config() {
     }
 
     public void setDefaultBoard() {
@@ -41,6 +40,14 @@ public class Config {
     public void setPlayerNames(String name1, String name2) {
         player1 = name1;
         player2 = name2;
+    }
+    
+    public void setSize(int size){
+        this.size = size;
+    }
+    
+    public int getSize(){
+        return size;
     }
 
     //if standard, then bagName is the language name (pl or en), else it's a path

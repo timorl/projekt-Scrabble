@@ -2,6 +2,7 @@ package pl.edu.uj.tcs.matematycy2013;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -21,24 +22,19 @@ public class Game {
     private final Timer timer;
     private EndGUI endGUI;
 
-    public Game(Config conf, String name1, String name2) {
-        //temporary - we don't have Config yet
-        //gui = new GUI("Scrabble", this);
+    public Game(Config conf) throws IOException {
         dictionary = new Dictionary();
         bag = new Bag();
-        try {
-            board = new Board( Thread.currentThread().getContextClassLoader().getResourceAsStream("defaultBoard.txt") );
-        } catch (Exception e) {
-            board = new Board();
-        }
-        player1 = new Player(name1,conf.getMaxTime());
-        player2 = new Player(name2,conf.getMaxTime());
+        board = new Board(conf.getBoardStream());
+        player1 = new Player(conf.getPlayer1(),conf.getMaxTime());
+        player2 = new Player(conf.getPlayer2(),conf.getMaxTime());
         player1.setLetters(bag.getLetters(7));
         player2.setLetters(bag.getLetters(7));
+        
         currentPlayer = player1;
         turn = new Turn(player1, board, bag.getSize());
         changeGui = new ChangePlayerGUI(this);
-        timer=new Timer(1000,new ActionListener() {
+        timer = new Timer(1000,new ActionListener() {
 
         	public void actionPerformed(ActionEvent e) {
 				currentPlayer.updateTime();
