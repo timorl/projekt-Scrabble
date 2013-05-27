@@ -328,8 +328,8 @@ public class Lobby extends javax.swing.JFrame {
     public void fillConfig(Config config) throws FileNotFoundException {
         config.setPlayerNames(jTextField7.getText(), jTextField8.getText());
         config.setMaxTime(60*(Integer)(jSpinner1.getValue()));
-        config.setSize(17);
         config.setBag("pl", true);
+        config.setDictionary("pl", true);
         config.setDefaultBoard();
     }
 }

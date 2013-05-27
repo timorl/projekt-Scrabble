@@ -6,12 +6,12 @@ public class Letter {
 	private final int points;
 
     public Letter(char theChar, int points) {
-        letter = theChar;
+        letter = Character.toUpperCase(theChar);
         this.points = points;
     }
 
     public void setChar(char newChar) {
-        letter = newChar;
+        letter = Character.toUpperCase(newChar);
     }
 
     public char getChar() {
@@ -29,4 +29,10 @@ public class Letter {
 
     	return false;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(letter) + String.valueOf(points);
+    }
+
 }

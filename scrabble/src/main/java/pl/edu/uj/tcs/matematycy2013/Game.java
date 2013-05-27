@@ -23,8 +23,9 @@ public class Game {
     private EndGUI endGUI;
 
     public Game(Config conf) throws IOException {
-        dictionary = new Dictionary();
-        bag = new Bag();
+        Alphabet alph = new Alphabet(conf.getBagStream());
+        dictionary = new Dictionary(conf.getDictionaryStream(), alph);
+        bag = new Bag(conf.getBagStream());
         board = new Board(conf.getBoardStream());
         player1 = new Player(conf.getPlayer1(),conf.getMaxTime());
         player2 = new Player(conf.getPlayer2(),conf.getMaxTime());

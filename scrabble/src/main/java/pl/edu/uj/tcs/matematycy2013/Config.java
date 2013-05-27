@@ -6,35 +6,49 @@ import java.io.InputStream;
 
 public class Config {
 
-    private InputStream board;
+    private String board;
+    private boolean standardBoard;
     private boolean boardIsTorus;
-    private InputStream dictionary;
-    private InputStream bag;
+
+    private String dictionary;
+    private boolean standardDictionary;
+
+    private String bag;
+    private boolean standardBag;
+
     private String player1;
     private String player2;
     private int maxTime;
-    private int size;
 
     public Config() {
+        board = "defaultBoard.txt";
+        standardBoard = true;
+        boardIsTorus = false;
+        dictionary = "pl";
+        standardDictionary = true;
+        bag = "pl";
+        standardBag = true;
+        player1 = "Player 1";
+        player2 = "Player 2";
+        maxTime = 60;
     }
 
     public void setDefaultBoard() {
-        board = Thread.currentThread().getContextClassLoader().getResourceAsStream("defaultBoard.txt");
+        standardBoard = true;
+        board = "defaultBoard.txt";
         boardIsTorus = false;
     }
 
-    public void setBoard(String pathToFile, boolean isTorus) throws FileNotFoundException {
-        board = new FileInputStream(pathToFile);
+    public void setBoard(String pathToFile, boolean isTorus) {
+        standardBoard = false;
+        board = pathToFile;
         boardIsTorus = isTorus;
     }
 
     //if standard, then dictName is the language name (pl or en), else it's a path
     public void setDictionary(String dictName, boolean standard) throws FileNotFoundException {
-        if (standard) {
-            dictionary = Thread.currentThread().getContextClassLoader().getResourceAsStream("words-" + dictName + ".txt");
-        } else {
-            dictionary = new FileInputStream(dictName);
-        }
+        dictionary = dictName;
+        standardDictionary = standard;
     }
 
     public void setPlayerNames(String name1, String name2) {
@@ -42,37 +56,38 @@ public class Config {
         player2 = name2;
     }
     
-    public void setSize(int size){
-        this.size = size;
-    }
-    
-    public int getSize(){
-        return size;
-    }
-
     //if standard, then bagName is the language name (pl or en), else it's a path
     public void setBag(String bagName, boolean standard) throws FileNotFoundException {
-        if (standard) {
-            bag = Thread.currentThread().getContextClassLoader().getResourceAsStream("letters-" + bagName + ".txt");
-        } else {
-            bag = new FileInputStream(bagName);
-        }
+        bag = bagName;
+        standardBag = standard;
     }
 
     public void setMaxTime(int time) {
         maxTime = time;
     }
 
-    public InputStream getBoardStream() {
-        return board;
+    public InputStream getBoardStream() throws FileNotFoundException {
+        InputStream boardIS;
+        if (standardBoard) {
+            boardIS = Thread.currentThread().getContextClassLoader().getResourceAsStream(board);
+        } else {
+            boardIS = new FileInputStream(board);
+        }
+        return boardIS;
     }
 
     public boolean getBoardTorus() {
         return boardIsTorus;
     }
 
-    public InputStream getDictionaryStream() {
-        return dictionary;
+    public InputStream getDictionaryStream() throws FileNotFoundException {
+        InputStream dictionaryIS;
+        if (standardDictionary) {
+            dictionaryIS = Thread.currentThread().getContextClassLoader().getResourceAsStream("words-" + dictionary + ".txt");
+        } else {
+            dictionaryIS = new FileInputStream(dictionary);
+        }
+        return dictionaryIS;
     }
 
     public String getPlayer1() {
@@ -83,8 +98,14 @@ public class Config {
         return player2;
     }
 
-    public InputStream getBagStream() {
-        return bag;
+    public InputStream getBagStream() throws FileNotFoundException {
+        InputStream bagIS;
+        if (standardBag) {
+            bagIS = Thread.currentThread().getContextClassLoader().getResourceAsStream("letters-" + bag + ".txt");
+        } else {
+            bagIS = new FileInputStream(bag);
+        }
+        return bagIS;
     }
 
     public int getMaxTime() {

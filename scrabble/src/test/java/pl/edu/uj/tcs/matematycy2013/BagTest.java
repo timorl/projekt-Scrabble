@@ -21,7 +21,8 @@ public class BagTest {
         bag.addLetters(letters);
 
         assertEquals(10, bag.getSize());
-        assertEquals(null, bag.getLetters(11));
+        //Not anymore
+        //assertEquals(null, bag.getLetters(11));
 
         bag.getLetters(10);
         assertEquals(0, bag.getSize());
