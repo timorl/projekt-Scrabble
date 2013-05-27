@@ -4,6 +4,7 @@
  */
 package pl.edu.uj.tcs.matematycy2013;
 
+import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -11,8 +12,8 @@ import org.junit.Test;
 public class GameTest {
 
     @Test
-    public void countScoreTest() {
-        Game game = new Game(new Config(60*20), "dudu", "marcin");
+    public void countScoreTest() throws IOException {
+        Game game = new Game(new Config());
         Cell[][] cells = new Cell[13][13];
 
         for (int i = 0; i < 13; i++) {
@@ -38,8 +39,8 @@ public class GameTest {
         players[1].setLetters(letters);
 
         game.setBoard(board);
-        Turn turn = new Turn(players[0], board);
-        Turn turn2 = new Turn(players[1], board);
+        Turn turn = new Turn(players[0], board, 17);
+        Turn turn2 = new Turn(players[1], board, 17);
 
         for(int i=0; i<3; ++i){
             turn.putLetterOnTable(letters[i+1], i+5, 6);
@@ -56,8 +57,8 @@ public class GameTest {
         board.commit(turn2);
     }
 
-    public void CountScoreSimpleTest() {
-        Game game = new Game(new Config(60*20), "timorl", "michal");
+    public void CountScoreSimpleTest() throws IOException {
+        Game game = new Game(new Config());
         Cell[][] cells = new Cell[13][13];
 
         for (int i = 0; i < 13; i++) {
@@ -76,7 +77,7 @@ public class GameTest {
         }
 
         players[0].setLetters(letters);
-        Turn turn = new Turn(players[0], board);
+        Turn turn = new Turn(players[0], board, 17);
 
         for(int i=0; i<7; ++i){
             turn.putLetterOnTable(letters[i], 2, i);
