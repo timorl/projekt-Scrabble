@@ -13,7 +13,11 @@ public class Scrabble {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                gui.createGUI(config.getSize(), c, config.getPlayer1(), config.getPlayer2());
+                int size = c.length;
+                if (!config.getBoardTorus()) {
+                    size -= 2;
+                }
+                gui.createGUI(size, c, config.getPlayer1(), config.getPlayer2());
             }
         });
     }
