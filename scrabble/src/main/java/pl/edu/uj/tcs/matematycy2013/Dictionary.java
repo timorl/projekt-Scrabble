@@ -29,6 +29,6 @@ public class Dictionary {
         if(tree == null){
             return true;
         }
-        return tree.search(toCheck);
+        return tree.search(toCheck.toLowerCase());
     }
 }
