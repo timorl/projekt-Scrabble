@@ -335,6 +335,7 @@ public class Game {
             	int score = countScore(turn);
             	if (score < 0) {
             		turn.timeLeft(); // timeLeft clears Turn?
+                        gui.setLook(board);
             		currentPlayer.pass(); 
             	} else {
 	                board.commit(turn);
