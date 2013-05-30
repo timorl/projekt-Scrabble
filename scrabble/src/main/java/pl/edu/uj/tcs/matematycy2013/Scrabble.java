@@ -7,7 +7,7 @@ public class Scrabble {
 
     public static void startGame(final Config config) throws FileNotFoundException, IOException {
         Game game = new Game(config);
-        final GUI gui = new GUI("Scrabble", game);
+        final GUI gui = new GUI( game);
         game.setGUI(gui);
         final Cell[][] c = gui.game.getBoard().getBoard();
 
