@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -170,5 +171,23 @@ public class GUI extends JFrame {
 	public void updateBagSize(int i) {
 		bag.actualize(i);
 	}
+
+        public char askForLetter(Character[] alph, LetterCoordinates coords) {
+            String message = "What letter should the blank in the column " + coords.x + " and row " + coords.y + "represent?";
+            String name = "Fill the blank";
+            Character res = null;
+            do {
+                res = (Character)JOptionPane.showInputDialog(
+                    panel,
+                    message,
+                    name,
+                    JOptionPane.PLAIN_MESSAGE,
+                    null, //No icon.
+                    alph,
+                    alph[0]
+                );
+            } while (res == null);
+            return res.charValue();
+        }
 }
 

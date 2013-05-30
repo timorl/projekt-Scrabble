@@ -12,6 +12,7 @@ public class Game {
 
     private Board board;
     private final Dictionary dictionary;
+    private final Alphabet alphabet;
     private Turn turn;
     private final Player player1;
     private final Player player2;
@@ -23,8 +24,8 @@ public class Game {
     private EndGUI endGUI;
 
     public Game(Config conf) throws IOException {
-        Alphabet alph = new Alphabet(conf.getBagStream());
-        dictionary = new Dictionary(conf.getDictionaryStream(), alph);
+        alphabet = new Alphabet(conf.getBagStream());
+        dictionary = new Dictionary(conf.getDictionaryStream(), alphabet);
         bag = new Bag(conf.getBagStream());
         board = new Board(conf.getBoardStream());
         player1 = new Player(conf.getPlayer1(),conf.getMaxTime());
@@ -113,6 +114,38 @@ public class Game {
         setGUIState();
     }
 
+    private Letter[] addLettersToBlanks(LetterCoordinates now, int orientation, Letter[][] putLetters) {
+        LetterCoordinates start, end;
+        ArrayList<Letter> foundBlanks = new ArrayList<Letter>();
+        start = findStart(now, putLetters, orientation);
+        end = findEnd(now, putLetters, orientation);
+        while ( !start.equals(end) ) {
+            if ( putLetters[start.x][start.y] != null && putLetters[start.x][start.y].getChar() == '*' ) {
+                char letterToSet = gui.askForLetter(alphabet.getLetters(), start);
+                foundBlanks.add(putLetters[start.x][start.y]);
+                putLetters[start.x][start.y].setChar(letterToSet);
+            }
+            start = nextField(start, orientation);
+        }
+        if ( putLetters[start.x][start.y] != null && putLetters[start.x][start.y].getChar() == '*' ) {
+            char letterToSet = gui.askForLetter(alphabet.getLetters(), start);
+            foundBlanks.add(putLetters[start.x][start.y]);
+            putLetters[start.x][start.y].setChar(letterToSet);
+        }
+        Letter[] result = new Letter[foundBlanks.size()];
+        int i = 0;
+        for ( Letter l: foundBlanks ) {
+            result[i++] = l;
+        }
+        return result;
+    }
+
+    private void clearBlanks(Letter[] toClear) {
+        for (Letter l: toClear) {
+            l.setChar('*');
+        }
+    }
+
     // return -1 when at least one word is incorrect
     public int countScore(Turn toCount) {
         ArrayList<LetterCoordinates> onBoard = toCount.getOnBoard();
@@ -127,14 +160,17 @@ public class Game {
 
         Letter[][] putLetters = toCount.getPutLetters();
         int orientation = getOrientation(onBoard);
+        Letter[] oldBlanks = addLettersToBlanks(new LetterCoordinates(onBoard.get(0).x, onBoard.get(0).y), orientation, putLetters);
 
         int score = processMainWord(new LetterCoordinates(onBoard.get(0).x, onBoard.get(0).y), orientation, putLetters);
         if (score == -1) {
+            clearBlanks(oldBlanks);
             return -1;
         }
 
         int additionalScore = processAdditionalWords(onBoard, orientation ^ 1, putLetters);
         if (additionalScore == -1) {
+            clearBlanks(oldBlanks);
             return -1;
         }
 
