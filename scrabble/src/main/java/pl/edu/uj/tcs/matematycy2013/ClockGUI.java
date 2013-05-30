@@ -1,5 +1,6 @@
 package pl.edu.uj.tcs.matematycy2013;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -12,11 +13,14 @@ public class ClockGUI extends JPanel {
 	 temporary - time format?
 	 */
 	private static final long serialVersionUID = 1L;
-	private final JLabel text = new JLabel("Time Left:");
+	private final JLabel text = new JLabel("Time left:");
 	private final JLabel time = new JLabel();
 	private int tme;
 
 	public ClockGUI (int tm) {
+		Font font = new Font("Serif", Font.BOLD, 15);
+		text.setFont(font);
+		time.setFont(font);
 		tme=tm;
 		setLayout(new GridLayout(2,1));
 		this.time.setText(formatTime(tm));
