@@ -58,6 +58,7 @@ public class BoardGUI extends JPanel {
 				if (lets[i][j] != null) {
 					buttons[i][j].setEnabled(false);
 					buttons[i][j].setBlack(true);
+					buttons[i][j].withLetter(lets[i][j]);
 				}
 			}
 		}
@@ -70,6 +71,7 @@ public class BoardGUI extends JPanel {
 				if (lets[i][j] != null) {
 					buttons[i][j].setEnabled(false);
 					buttons[i][j].setBlack(true);
+					buttons[i][j].withLetter(lets[i][j]);
 				}
 				else  {
 					buttons[i][j].setEnabled(true);
