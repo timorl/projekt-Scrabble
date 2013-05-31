@@ -31,9 +31,9 @@ public class Game {
     public Game(Config conf) throws IOException {
     	
     	config=conf;
+        alphabet = new Alphabet(conf.getBagStream());
     	dictionaryLoader=getDictionaryLoader();
     	dictionaryLoader.execute();
-        alphabet = new Alphabet(conf.getBagStream());
         bag = new Bag(conf.getBagStream());
         board = new Board(conf.getBoardStream());
         player1 = new Player(conf.getPlayer1(),conf.getMaxTime());
