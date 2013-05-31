@@ -20,6 +20,7 @@ public class PlayerLettersGUI extends JPanel {
 			letters[i] = new LetterButton(cell,position);
 			letters[i].addMouseListener(btnMseLnr);
 			add(letters[i]);
+			letters[i].noLetter();
 		}
 	}
 	public PlayerLettersGUI(Letter[] playerLetters, ButtonMouseListener btnMseLnr, Position position) {

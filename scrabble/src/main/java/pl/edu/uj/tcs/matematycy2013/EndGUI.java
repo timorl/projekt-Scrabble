@@ -4,9 +4,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,7 +30,16 @@ public class EndGUI extends JFrame{
 
 
 	public EndGUI (Player player, String gameResult) {
+		super("Scrabble - the end");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream input = classLoader.getResourceAsStream("icon.jpe");
+		try {
+			Image im = ImageIO.read(input);
+			setIconImage(im);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		setPreferredSize(new Dimension (500, 500));
 		message = new JLabel(gameResult);
 		message.setFont(new Font ("Serif", Font.BOLD, 30));
