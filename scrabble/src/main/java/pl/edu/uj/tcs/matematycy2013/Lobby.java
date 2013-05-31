@@ -4,10 +4,14 @@
  */
 package pl.edu.uj.tcs.matematycy2013;
 
+import java.awt.Image;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 import javax.swing.SpinnerNumberModel;
 
 public class Lobby extends javax.swing.JFrame {
@@ -26,6 +30,14 @@ public class Lobby extends javax.swing.JFrame {
         super("Scrabble");
         this.config = config;
         initComponents();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream input = classLoader.getResourceAsStream("icon.jpe");
+		try {
+			Image im = ImageIO.read(input);
+			setIconImage(im);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
     }
 
     /**

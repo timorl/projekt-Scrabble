@@ -41,6 +41,15 @@ public class Alphabet {
         }
     }
 
+    public Character[] getLetters() {
+        Character[] result = new Character[alphabet.size()];
+        int i = 0;
+        for ( Character c : alphabet ) {
+            result[i++] = new Character(c);
+        }
+        return result;
+    }
+
     public int getCharacterLabel(char c) {
         return alphabet.indexOf(c);
     }

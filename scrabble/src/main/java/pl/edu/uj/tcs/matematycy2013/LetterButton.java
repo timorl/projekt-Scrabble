@@ -73,7 +73,7 @@ public class LetterButton extends JButton {
 			lbl = "<html>" + "Triple" + "<br>" + "letter" + "<br>" + "score"
 					 + "</html>";
 			field.setText(lbl);
-			fieldColor = Color.BLUE;
+			fieldColor = new Color(0, 128, 255);
 			break;
 		case START:
 			field.setText("Start");

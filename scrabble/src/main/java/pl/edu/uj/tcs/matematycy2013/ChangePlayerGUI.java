@@ -3,7 +3,10 @@ package pl.edu.uj.tcs.matematycy2013;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -17,8 +20,17 @@ public class ChangePlayerGUI extends JFrame {
 	Game game;
 	
 	public ChangePlayerGUI (Game game) {
+		super("Scrabble - changieng player");
 		this.game = game;
 		format();
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream input = classLoader.getResourceAsStream("icon.jpe");
+		try {
+			Image im = ImageIO.read(input);
+			setIconImage(im);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 	private void format () {
 		setPreferredSize(new Dimension (400, 200));
