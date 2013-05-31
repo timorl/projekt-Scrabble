@@ -190,7 +190,7 @@ public class Game {
         }
 
         Letter[][] putLetters = toCount.getPutLetters();
-        int orientation = getOrientation(onBoard);
+        int orientation = getOrientation(onBoard, putLetters);
         Letter[] oldBlanks = addLettersToBlanks(new LetterCoordinates(onBoard.get(0).x, onBoard.get(0).y), orientation, putLetters);
 
         int score = processMainWord(new LetterCoordinates(onBoard.get(0).x, onBoard.get(0).y), orientation, putLetters);
@@ -304,7 +304,6 @@ public class Game {
             end = cur;
             cur = nextField(cur, orientation);
         }
-        System.out.println("end: " + end.x + " " + end.y);
         return end;
     }
 
@@ -324,9 +323,13 @@ public class Game {
         return -1;
     }
 
-    private int getOrientation(ArrayList<LetterCoordinates> list) {
+    private int getOrientation(ArrayList<LetterCoordinates> list, Letter[][] putLetters) {
         if (list.size() == 1) {
-            return 0;
+            LetterCoordinates now = list.get(0);
+            if(!findStart(now,putLetters,0).equals(findEnd(now,putLetters,0))){
+                return 0;
+            }
+            return 1;
         }
         else {
             LetterCoordinates a = list.get(0);
