@@ -32,12 +32,13 @@ public class Lobby extends javax.swing.JFrame {
         initComponents();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		InputStream input = classLoader.getResourceAsStream("icon.jpe");
-		try {
+/*		try {
 			Image im = ImageIO.read(input);
 			setIconImage(im);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+*/		
     }
 
     /**

@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -27,10 +28,12 @@ public class EndGUI extends JFrame{
 	private final JButton end = new JButton ("EXIT");
 	private final JButton restart = new JButton ("RESTART");
 	private final JButton newGame = new JButton ("NEW GAME");
+	private Config config;
 
 
-	public EndGUI (Player player, String gameResult) {
+	public EndGUI (Player player, String gameResult, Config conf) {
 		super("Scrabble - the end");
+		config=conf;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		InputStream input = classLoader.getResourceAsStream("icon.jpe");
@@ -59,14 +62,29 @@ public class EndGUI extends JFrame{
 		restart.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				//TODO;
+				setVisible(false);
+				try {
+					Scrabble.startGame(config);
+				} catch (FileNotFoundException e1) {
+					System.out.println("file not found when restarting game");
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					System.out.println("IOexception when restarting game");
+					e1.printStackTrace();
+				}
 			}
 		});
 
 		newGame.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				//TODO;
+				setVisible(false);
+				try {
+					Scrabble.main(null);
+				} catch (IOException e1) {
+					System.out.println("IOexception when firing new game");
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -84,11 +102,10 @@ public class EndGUI extends JFrame{
 
 		setLayout(new GridLayout (4,1));
 		add(message);
-		if(gameResult.equals("The winner is: ")) {
-			add(winner);
-			add(score);
-			add(panel);
-		}
+		add(winner);
+		add(score);
+		add(panel);
+		
 	}
 
 	public void showEndGUI() {
