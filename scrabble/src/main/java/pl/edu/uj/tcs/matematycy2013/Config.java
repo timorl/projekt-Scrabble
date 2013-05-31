@@ -33,10 +33,10 @@ public class Config {
         maxTime = 60;
     }
 
-    public void setDefaultBoard() {
+    public void setDefaultBoard(boolean isTorus) {
         standardBoard = true;
         board = "defaultBoard.txt";
-        boardIsTorus = false;
+        boardIsTorus = isTorus;
     }
 
     public void setBoard(String pathToFile, boolean isTorus) {
@@ -49,6 +49,7 @@ public class Config {
     public void setDictionary(String dictName, boolean standard) throws FileNotFoundException {
         dictionary = dictName;
         standardDictionary = standard;
+        System.out.print(dictName);
     }
 
     public void setPlayerNames(String name1, String name2) {
@@ -60,6 +61,7 @@ public class Config {
     public void setBag(String bagName, boolean standard) throws FileNotFoundException {
         bag = bagName;
         standardBag = standard;
+        System.out.print(bagName);
     }
 
     public void setMaxTime(int time) {
