@@ -5,14 +5,17 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
+import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
 public class Game {
 
     private Board board;
-    private final Dictionary dictionary;
-    private final Alphabet alphabet;
+    private Dictionary dictionary;
+    private SwingWorker<Dictionary,Void> dictionaryLoader;
+    private Alphabet alphabet;
     private Turn turn;
     private final Player player1;
     private final Player player2;
@@ -23,12 +26,14 @@ public class Game {
     private final Timer timer;
     private EndGUI endGUI;
     private Config config;
+    
 
     public Game(Config conf) throws IOException {
     	
     	config=conf;
+    	dictionaryLoader=getDictionaryLoader();
+    	dictionaryLoader.execute();
         alphabet = new Alphabet(conf.getBagStream());
-        dictionary = new Dictionary(conf.getDictionaryStream(), alphabet);
         bag = new Bag(conf.getBagStream());
         board = new Board(conf.getBoardStream());
         player1 = new Player(conf.getPlayer1(),conf.getMaxTime());
@@ -51,6 +56,29 @@ public class Game {
 				}
 			}
 		});
+    }
+    private SwingWorker<Dictionary, Void> getDictionaryLoader(){
+    	return new SwingWorker<Dictionary, Void>() {
+
+			@Override
+			protected Dictionary doInBackground() throws Exception {
+				return new Dictionary(config.getDictionaryStream(), alphabet);
+			}
+    		
+			@Override
+			public void done(){
+				try {
+					dictionary=get();
+				} catch (InterruptedException e) {
+					System.out.println("InterruptedException when loading dictionary");
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					System.out.println("ExecutionException when loading dictionary");
+					e.printStackTrace();
+				}
+			}
+    		
+		};
     }
 
     private void changeCurrentPlayer() {
@@ -363,7 +391,15 @@ public class Game {
     }
 
     public void finaliseTurn() {
-    	timer.stop();    	
+    	timer.stop(); 
+    	//waits 0,5 sec if dictionary hasn't been loaded yet
+    	while(!dictionaryLoader.isDone())
+			try {
+				wait(500);
+			} catch (InterruptedException e) {
+				System.out.println("Interrupted while sleeping when waiting for dictinary (game.finalizeTurn)");
+				e.printStackTrace();
+			}
         switch ( turn.state ) {
             case EXCHANGE:
                 exchangeLetters(true);
@@ -490,4 +526,5 @@ public class Game {
         this.gui = gui;
         timer.start();
     }
+
 }
