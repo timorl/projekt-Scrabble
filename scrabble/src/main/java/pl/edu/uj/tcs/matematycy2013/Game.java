@@ -22,8 +22,11 @@ public class Game {
     private final ChangePlayerGUI changeGui;
     private final Timer timer;
     private EndGUI endGUI;
+    private Config config;
 
     public Game(Config conf) throws IOException {
+    	
+    	config=conf;
         alphabet = new Alphabet(conf.getBagStream());
         dictionary = new Dictionary(conf.getDictionaryStream(), alphabet);
         bag = new Bag(conf.getBagStream());
@@ -440,15 +443,16 @@ public class Game {
 	private void finaliseGame() {
         gui.showGamePanel(false);
         if(player1.getScore()>player2.getScore())
-        	endGUI=new EndGUI(player1,"The winner is: ");
+        	endGUI=new EndGUI(player1,"The winner is: ",config);
         if(player1.getScore()<player2.getScore())
-        	endGUI=new EndGUI(player2,"The winner is: ");
+        	endGUI=new EndGUI(player2,"The winner is: ",config);
         if(player1.getScore()==player2.getScore())
-        	endGUI=new EndGUI(null,"The match ended in a draw.");
+        	endGUI=new EndGUI(null,"The match ended in a draw.",config);
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 
             	endGUI.showEndGUI();
+            	
             }
         });
 	}
