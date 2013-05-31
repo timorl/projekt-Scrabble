@@ -27,5 +27,31 @@ public class DictionaryTest {
         assertEquals(false, d.checkWord("Böse") );
         assertEquals(false, d.checkWord("悪") );
     }
+    
+    @Test
+    public void englishDictionaryTest() throws IOException {
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("words-en.txt");
+        Alphabet alphabet = new Alphabet(Thread.currentThread().getContextClassLoader().getResourceAsStream("letters-en.txt"));
+        Dictionary d = new Dictionary(is,alphabet);
+        assertEquals(true, d.checkWord("bugs") );
+        assertEquals(true, d.checkWord("threads") );
+        assertEquals(true, d.checkWord("semaphores") );
+        assertEquals(true, d.checkWord("programming") );
+        assertEquals(true, d.checkWord("dictionary") );
+        assertEquals(true, d.checkWord("efficiency") );
+        assertEquals(false, d.checkWord("wyrąbisty") );
+        assertEquals(false, d.checkWord("trzmiel") );
+        assertEquals(true, d.checkWord("exquisite") );
+        assertEquals(false, d.checkWord("شر") );
+        assertEquals(false, d.checkWord("Böse") );
+        assertEquals(false, d.checkWord("悪") );
+        assertEquals(true, d.checkWord("pies") );
+        assertEquals(false, d.checkWord("abdykacja") );
+        assertEquals(false, d.checkWord("eufemizm") );
+        assertEquals(false, d.checkWord("żywność") );
+        assertEquals(true, d.checkWord("availability") );
+        assertEquals(true, d.checkWord("integrity") );
+        assertEquals(true, d.checkWord("confidentiality") );        
+    }
 
 }
