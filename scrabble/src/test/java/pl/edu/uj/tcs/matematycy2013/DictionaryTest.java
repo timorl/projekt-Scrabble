@@ -1,19 +1,20 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.io.IOException;
-import org.junit.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.io.InputStream;
+import java.io.IOException;
+
+import org.junit.Test;
 
 public class DictionaryTest {
 
     @Test
     public void testBasic() throws IOException {
-        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("words-pl.txt");
         Alphabet alphabet = new Alphabet();
         alphabet.addLetters(new char[]{'a','ą','b','c','ć','d','e','ę','f','g','h','i','j','k','l','ł','m','n','ń','o','ó','p','r','s','ś','t','u','w','y','z','ź','ż','v','x','q'});
-        Dictionary d = new Dictionary(is,alphabet);
+        Config conf=new Config();
+        conf.setDictionary("pl", true);
+        Dictionary d = new Dictionary(conf,alphabet);
         assertEquals(true, d.checkWord("aa") );
         assertEquals(true, d.checkWord("pies") );
         assertEquals(true, d.checkWord("abdykacja") );
@@ -27,12 +28,13 @@ public class DictionaryTest {
         assertEquals(false, d.checkWord("Böse") );
         assertEquals(false, d.checkWord("悪") );
     }
-    
+
     @Test
     public void englishDictionaryTest() throws IOException {
-        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("words-en.txt");
         Alphabet alphabet = new Alphabet(Thread.currentThread().getContextClassLoader().getResourceAsStream("letters-en.txt"));
-        Dictionary d = new Dictionary(is,alphabet);
+        Config conf=new Config();
+        conf.setDictionary("en", true);
+        Dictionary d = new Dictionary(conf,alphabet);
         assertEquals(true, d.checkWord("bugs") );
         assertEquals(true, d.checkWord("threads") );
         assertEquals(true, d.checkWord("semaphores") );
@@ -51,7 +53,7 @@ public class DictionaryTest {
         assertEquals(false, d.checkWord("żywność") );
         assertEquals(true, d.checkWord("availability") );
         assertEquals(true, d.checkWord("integrity") );
-        assertEquals(true, d.checkWord("confidentiality") );        
+        assertEquals(true, d.checkWord("confidentiality") );
     }
 
 }

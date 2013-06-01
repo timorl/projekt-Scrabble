@@ -56,7 +56,7 @@ public class Config {
         player1 = name1;
         player2 = name2;
     }
-    
+
     //if standard, then bagName is the language name (pl or en), else it's a path
     public void setBag(String bagName, boolean standard) throws FileNotFoundException {
         bag = bagName;
@@ -113,5 +113,9 @@ public class Config {
     public int getMaxTime() {
         return maxTime;
     }
+
+	public String getDictionaryType(){
+		return dictionary;
+	}
 
 }

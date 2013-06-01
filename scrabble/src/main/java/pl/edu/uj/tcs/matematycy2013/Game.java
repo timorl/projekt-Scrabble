@@ -5,17 +5,14 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
 
-import javax.swing.SwingWorker;
 import javax.swing.Timer;
 
 public class Game {
 
     private Board board;
-    private Dictionary dictionary;
-    private SwingWorker<Dictionary,Void> dictionaryLoader;
-    private Alphabet alphabet;
+    private final Dictionary dictionary;
+    private final Alphabet alphabet;
     private Turn turn;
     private final Player player1;
     private final Player player2;
@@ -25,22 +22,21 @@ public class Game {
     private final ChangePlayerGUI changeGui;
     private final Timer timer;
     private EndGUI endGUI;
-    private Config config;
-    
+    private final Config config;
+
 
     public Game(Config conf) throws IOException {
-    	
+
     	config=conf;
         alphabet = new Alphabet(conf.getBagStream());
-    	dictionaryLoader=getDictionaryLoader();
-    	dictionaryLoader.execute();
+        dictionary=new Dictionary(conf, alphabet);
         bag = new Bag(conf.getBagStream());
         board = new Board(conf.getBoardStream());
         player1 = new Player(conf.getPlayer1(),conf.getMaxTime());
         player2 = new Player(conf.getPlayer2(),conf.getMaxTime());
         player1.setLetters(bag.getLetters(7));
         player2.setLetters(bag.getLetters(7));
-        
+
         currentPlayer = player1;
         turn = new Turn(player1, board, bag.getSize());
         changeGui = new ChangePlayerGUI(this);
@@ -57,29 +53,7 @@ public class Game {
 			}
 		});
     }
-    private SwingWorker<Dictionary, Void> getDictionaryLoader(){
-    	return new SwingWorker<Dictionary, Void>() {
 
-			@Override
-			protected Dictionary doInBackground() throws Exception {
-				return new Dictionary(config.getDictionaryStream(), alphabet);
-			}
-    		
-			@Override
-			public void done(){
-				try {
-					dictionary=get();
-				} catch (InterruptedException e) {
-					System.out.println("InterruptedException when loading dictionary");
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					System.out.println("ExecutionException when loading dictionary");
-					e.printStackTrace();
-				}
-			}
-    		
-		};
-    }
 
     private void changeCurrentPlayer() {
         if (currentPlayer == player1) {
@@ -394,15 +368,7 @@ public class Game {
     }
 
     public void finaliseTurn() {
-    	timer.stop(); 
-    	//waits 0,5 sec if dictionary hasn't been loaded yet
-    	while(!dictionaryLoader.isDone())
-			try {
-				wait(500);
-			} catch (InterruptedException e) {
-				System.out.println("Interrupted while sleeping when waiting for dictinary (game.finalizeTurn)");
-				e.printStackTrace();
-			}
+    	timer.stop();
         switch ( turn.state ) {
             case EXCHANGE:
                 exchangeLetters(true);
@@ -414,7 +380,7 @@ public class Game {
             	if (score < 0) {
             		turn.timeLeft(); // timeLeft clears Turn?
                         gui.setLook(board);
-            		currentPlayer.pass(); 
+            		currentPlayer.pass();
             	} else {
 	                board.commit(turn);
 	                currentPlayer.updateScore(score);
@@ -471,7 +437,7 @@ public class Game {
                     }
                 });
         	}
-        		
+
         }
     }
 
@@ -491,7 +457,7 @@ public class Game {
             public void run() {
 
             	endGUI.showEndGUI();
-            	
+
             }
         });
 	}

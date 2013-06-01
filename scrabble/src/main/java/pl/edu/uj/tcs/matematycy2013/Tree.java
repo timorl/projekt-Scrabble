@@ -1,10 +1,21 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-public class Tree {
-    public int counter = 0;
-    private class Node {
+import java.io.Serializable;
 
-        private Node[] childs;
+public class Tree implements Serializable{
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = -7099056431091367683L;
+	public int counter = 0;
+    private class Node implements Serializable{
+
+
+        /**
+		 *
+		 */
+		private static final long serialVersionUID = -7742374891011040560L;
+		private final Node[] childs;
         private boolean accepted;
 
         private Node(int childsNumber) {
@@ -13,8 +24,8 @@ public class Tree {
             accepted = false;
         }
     }
-    private Node root;
-    private Alphabet alphabet;
+    private final Node root;
+    private final Alphabet alphabet;
 
     public Tree(Alphabet alphabet) {
         this.alphabet = alphabet;
