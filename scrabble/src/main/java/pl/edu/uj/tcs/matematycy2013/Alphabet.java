@@ -1,14 +1,19 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.util.LinkedList;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.util.LinkedList;
 
-public class Alphabet {
+public class Alphabet implements Serializable{
 
-    private LinkedList<Character> alphabet;
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = 8027830040762773544L;
+	private final LinkedList<Character> alphabet;
 
     public Alphabet() {
         alphabet = new LinkedList<Character>();
