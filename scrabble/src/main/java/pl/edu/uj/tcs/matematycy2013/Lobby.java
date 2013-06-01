@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 public class Lobby extends javax.swing.JFrame {
 
@@ -37,7 +39,6 @@ public class Lobby extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
         languageGroup = new javax.swing.ButtonGroup();
         topologyGroup = new javax.swing.ButtonGroup();
         jTextField1 = new javax.swing.JTextField();
@@ -53,7 +54,7 @@ public class Lobby extends javax.swing.JFrame {
         defaultBoard = new javax.swing.JCheckBox();
         standardTopology = new javax.swing.JRadioButton();
         torusTopology = new javax.swing.JRadioButton();
-        maxTime = new javax.swing.JSpinner();
+        maxTime = new javax.swing.JSpinner(new SpinnerNumberModel(5, 3, 100, 1));
         uploadBag = new javax.swing.JButton();
         uploadBoard = new javax.swing.JButton();
         englishDictionary = new javax.swing.JRadioButton();
@@ -336,7 +337,7 @@ public class Lobby extends javax.swing.JFrame {
             player2.setText(player1.getText().substring(0, 9));
         }
     }
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify       
     private javax.swing.ButtonGroup languageGroup;
     private javax.swing.ButtonGroup topologyGroup;
     private javax.swing.JCheckBox defaultBag;
