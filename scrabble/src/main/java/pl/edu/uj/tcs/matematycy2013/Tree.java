@@ -2,19 +2,11 @@ package pl.edu.uj.tcs.matematycy2013;
 
 import java.io.Serializable;
 
-public class Tree implements Serializable{
-    /**
-	 *
-	 */
-	private static final long serialVersionUID = -7099056431091367683L;
+public class Tree {
+
 	public int counter = 0;
     private class Node implements Serializable{
 
-
-        /**
-		 *
-		 */
-		private static final long serialVersionUID = -7742374891011040560L;
 		private final Node[] childs;
         private boolean accepted;
 

@@ -9,10 +9,6 @@ import java.util.LinkedList;
 
 public class Alphabet implements Serializable{
 
-    /**
-	 *
-	 */
-	private static final long serialVersionUID = 8027830040762773544L;
 	private final LinkedList<Character> alphabet;
 
     public Alphabet() {
