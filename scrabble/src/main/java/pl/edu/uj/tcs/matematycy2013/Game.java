@@ -446,7 +446,7 @@ public class Game {
 	}
 
 	private void finaliseGame() {
-        gui.showGamePanel(false);
+        gui.showGameWindow(false);
         if(player1.getScore()>player2.getScore())
         	endGUI=new EndGUI(player1,"The winner is: ",config);
         if(player1.getScore()<player2.getScore())

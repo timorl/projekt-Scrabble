@@ -1,11 +1,15 @@
 package pl.edu.uj.tcs.matematycy2013;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -26,6 +30,14 @@ public class Lobby extends javax.swing.JFrame {
      */
     public Lobby(Config config) {
         super("Scrabble");
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream input = classLoader.getResourceAsStream("icon.jpe");
+		try {
+			Image im = ImageIO.read(input);
+			setIconImage(im);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
         this.setResizable(false);
         this.config = config;
         initComponents();
@@ -263,7 +275,7 @@ public class Lobby extends javax.swing.JFrame {
     }
 
     private void defaultBoardActionPerformed(java.awt.event.ActionEvent evt) {
-        defaultBoardSelected = !defaultBoardSelected;
+        //defaultBoardSelected = !defaultBoardSelected;
     }
 
     private void standardTopologyActionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,7 +335,7 @@ public class Lobby extends javax.swing.JFrame {
     }
 
     private void defaultBagActionPerformed(java.awt.event.ActionEvent evt) {
-        defaultBagSelected = !defaultBagSelected;
+        //defaultBagSelected = !defaultBagSelected;
     }
 
     private void player1Field1KeyTyped(java.awt.event.KeyEvent evt) {
