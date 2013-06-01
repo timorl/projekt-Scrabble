@@ -29,7 +29,7 @@ public class Game {
 
     	config=conf;
         alphabet = new Alphabet(conf.getBagStream());
-        dictionary=new Dictionary(conf, alphabet);
+        dictionary=new Dictionary(conf.getDictionaryStream(), alphabet);
         bag = new Bag(conf.getBagStream());
         board = new Board(conf.getBoardStream());
         player1 = new Player(conf.getPlayer1(),conf.getMaxTime());
