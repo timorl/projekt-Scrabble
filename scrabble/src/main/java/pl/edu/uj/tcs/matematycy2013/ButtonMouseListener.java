@@ -91,7 +91,8 @@ public class ButtonMouseListener extends MouseAdapter {
 	}
 
 	public void unclickButtons() {
-		tmp.setContentAreaFilled(true);
+		if(tmp!=null)
+			tmp.setContentAreaFilled(true);
 		tmp=null;
 	}
 }
