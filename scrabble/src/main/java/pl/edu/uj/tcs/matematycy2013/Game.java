@@ -48,6 +48,7 @@ public class Game {
 				if(currentPlayer.getTimeLeft()<=0) {
 			        turn.timeLeft();
 			        gui.setLook(board);
+			        gui.unclickButtons();
 			        finaliseTurn();
 				}
 			}

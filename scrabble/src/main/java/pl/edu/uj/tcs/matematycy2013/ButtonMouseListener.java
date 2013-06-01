@@ -78,7 +78,7 @@ public class ButtonMouseListener extends MouseAdapter {
 				}
 			}
 			tmp = null;
-			
+
 		}
 	}
 
@@ -88,5 +88,10 @@ public class ButtonMouseListener extends MouseAdapter {
 		tmp.setContentAreaFilled(true);
 		tmp.noLetter();
 
+	}
+
+	public void unclickButtons() {
+		tmp.setContentAreaFilled(true);
+		tmp=null;
 	}
 }
