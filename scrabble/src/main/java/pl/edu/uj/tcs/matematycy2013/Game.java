@@ -32,7 +32,7 @@ public class Game {
         dictionary=new Dictionary(conf.getDictionaryStream(), alphabet);
         bag = new Bag(conf.getBagStream());
         board = new Board(conf.getBoardStream());
-        player1 = new Player(conf.getPlayer1(),20);
+        player1 = new Player(conf.getPlayer1(),conf.getMaxTime());
         player2 = new Player(conf.getPlayer2(),conf.getMaxTime());
         player1.setLetters(bag.getLetters(7));
         player2.setLetters(bag.getLetters(7));
@@ -370,6 +370,7 @@ public class Game {
 
     public void finaliseTurn() {
     	timer.stop();
+    	gui.unclickButtons();
         switch ( turn.state ) {
             case EXCHANGE:
                 exchangeLetters(true);
