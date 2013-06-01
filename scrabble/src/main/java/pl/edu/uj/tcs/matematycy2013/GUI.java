@@ -198,9 +198,12 @@ public class GUI extends JFrame {
 		board.setLook(trueBoard);
 	}
 	public void showGamePanel(boolean flag) {
-//		board.setVisible(flag);
-//		rightPanel.setVisible(flag);
-//		downPanel.setVisible(flag);
+		board.setVisible(flag);
+		rightPanel.setVisible(flag);
+		downPanel.setVisible(flag);
+//		setVisible(flag);
+	}
+	public void showGameWindow(boolean flag) {
 		setVisible(flag);
 	}
 
