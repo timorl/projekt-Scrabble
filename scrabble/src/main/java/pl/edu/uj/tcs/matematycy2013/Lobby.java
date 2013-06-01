@@ -275,7 +275,12 @@ public class Lobby extends javax.swing.JFrame {
     }
 
     private void defaultBoardActionPerformed(java.awt.event.ActionEvent evt) {
-        //defaultBoardSelected = !defaultBoardSelected;
+       if(defaultBoardSelected){
+            uploadBoardActionPerformed(evt);
+        }
+        else{
+            defaultBoardSelected = !defaultBoardSelected;
+        }
     }
 
     private void standardTopologyActionPerformed(java.awt.event.ActionEvent evt) {
@@ -335,7 +340,12 @@ public class Lobby extends javax.swing.JFrame {
     }
 
     private void defaultBagActionPerformed(java.awt.event.ActionEvent evt) {
-        //defaultBagSelected = !defaultBagSelected;
+        if(defaultBagSelected){
+            uploadBagActionPerformed(evt);
+        }
+        else{
+            defaultBagSelected = !defaultBagSelected;
+        }
     }
 
     private void player1Field1KeyTyped(java.awt.event.KeyEvent evt) {
