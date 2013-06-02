@@ -48,6 +48,7 @@ public class Game {
 				if(currentPlayer.getTimeLeft()<=0) {
 			        turn.timeLeft();
 			        gui.setLook(board);
+			        gui.unclickButtons();
 			        finaliseTurn();
 				}
 			}
@@ -369,6 +370,7 @@ public class Game {
 
     public void finaliseTurn() {
     	timer.stop();
+    	gui.unclickButtons();
         switch ( turn.state ) {
             case EXCHANGE:
                 exchangeLetters(true);
@@ -447,6 +449,7 @@ public class Game {
 
 	private void finaliseGame() {
         gui.showGameWindow(false);
+        updatePlayersScores();
         if(player1.getScore()>player2.getScore())
         	endGUI=new EndGUI(player1,"The winner is: ",config);
         if(player1.getScore()<player2.getScore())
@@ -460,6 +463,37 @@ public class Game {
 
             }
         });
+	}
+
+	//add or subtract point after game ended
+	private void updatePlayersScores() {
+		Letter[] player1Letters=player1.getLetters();
+		Letter[] player2Letters=player2.getLetters();
+		int player1ScoreModification = 0;
+		int player2ScoreModification = 0;
+		//additional flag because of blanks
+		boolean player1HasLetter=false;
+		boolean player2HasLetter=false;
+
+		for(int i = 0; i < 7; i++) {
+			if(player1Letters[i]!=null) {
+				player1HasLetter=true;
+				player1ScoreModification+=player1Letters[i].getValue();
+			}
+			if(player2Letters[i]!=null) {
+				player2HasLetter=true;
+				player2ScoreModification+=player2Letters[i].getValue();
+			}
+		}
+
+		if(!player1HasLetter)
+			player1.updateScore(player2ScoreModification);
+		if(player1ScoreModification>0)
+			player1.updateScore(-player1ScoreModification);
+		if(!player2HasLetter)
+			player2.updateScore(player1ScoreModification);
+		if(player2ScoreModification>0)
+			player2.updateScore(-player1ScoreModification);
 	}
 
 	public Player[] getPlayers() {

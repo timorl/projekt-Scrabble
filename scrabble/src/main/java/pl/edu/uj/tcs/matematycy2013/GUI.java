@@ -1,13 +1,20 @@
 package pl.edu.uj.tcs.matematycy2013;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
-import javax.swing.JOptionPane;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 
 public class GUI extends JFrame {
@@ -24,7 +31,7 @@ public class GUI extends JFrame {
 	PlayersNicksGUI players;
 	PlayerLettersGUI playerLetters;
 	PlayerLettersGUI toExchange;
-
+	ButtonMouseListener btnMseLnr;
 	Game game;
 
 	GUI ( Game game) {
@@ -35,7 +42,7 @@ public class GUI extends JFrame {
 
 
 	public void createGUI (int size, Cell[][] cells, String player1, String player2) {
-		
+
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		InputStream input = classLoader.getResourceAsStream("icon.jpe");
 		try {
@@ -44,7 +51,7 @@ public class GUI extends JFrame {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-        ButtonMouseListener btnMseLnr=new ButtonMouseListener(game);
+        btnMseLnr=new ButtonMouseListener(game);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -61,7 +68,7 @@ public class GUI extends JFrame {
         gbc.gridwidth = 2;
 
 		add(board, gbc);
-		
+
 		downPanel = new JPanel (new GridBagLayout());
 		//downPanel.setBackground(Color.BLUE);
 		gbc.fill = GridBagConstraints.NONE;
@@ -78,7 +85,7 @@ public class GUI extends JFrame {
 		gbc.gridy = 1;
 		toExchange=new PlayerLettersGUI(Cell.TOEXCHANGE, btnMseLnr, Position.EXCHANGE);
 		downPanel.add(toExchange, gbc);
-		
+
 		//gbc.fill = GridBagConstraints.NONE;
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -92,7 +99,7 @@ public class GUI extends JFrame {
 		downPanel.setPreferredSize(new Dimension(500, 500));
 		downPanel.add(exchange, gbc);
 		exchange.setEnabled(false);
-		
+
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 0; //0.7;
 		gbc.weighty = 0; //0.3;
@@ -100,12 +107,12 @@ public class GUI extends JFrame {
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;
 		gbc.gridheight = 1;
-		
+
 		add(downPanel, gbc);
-		
+
 		rightPanel = new JPanel (new GridBagLayout());
 		//rightPanel.setBackground(Color.GREEN);
-		
+
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.weightx = 1;
 		gbc.weighty = 0.5;
@@ -115,7 +122,7 @@ public class GUI extends JFrame {
 		gbc.gridwidth = 1;
 		players = new PlayersNicksGUI(player1, player2);
 		rightPanel.add(players, gbc);
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		rightPanel.add(clock, gbc);
@@ -154,7 +161,7 @@ public class GUI extends JFrame {
 		gbc.gridwidth = 1;
 		gbc.gridx = 2;
 		gbc.gridy = 0;
-		
+
 		add(rightPanel, gbc);
 
 		//setMinimumSize(new Dimension(700,600));
@@ -235,5 +242,10 @@ public class GUI extends JFrame {
         } while (res == null);
         return res.charValue();
     }
+
+
+	public void unclickButtons() {
+		btnMseLnr.unclickButtons();
+	}
 }
 
