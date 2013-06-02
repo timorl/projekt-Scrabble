@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -226,9 +227,10 @@ public class GUI extends JFrame {
 	}
 
     public char askForLetter(Character[] alph, LetterCoordinates coords) {
-        String message = "What letter should the blank in the column " + coords.x + " and row " + coords.y + "represent?";
+        String message = "What letter should the blank in the column " + coords.x + " and row " + coords.y + " represent?";
         String name = "Fill the blank";
         Character res = null;
+        Arrays.sort(alph);
         do {
             res = (Character)JOptionPane.showInputDialog(
                 this,
