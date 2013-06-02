@@ -190,7 +190,11 @@ public class Turn {
     	for (int i=0; i<board.getSize(); i++) {
     		for (int j=0; j<board.getSize(); j++) {
     			if (putLetters[i][j] != null) {
-    				toExchange.add(putLetters[i][j]);
+                                if ( putLetters[i][j].getValue() == 0 ) {
+                                    toExchange.add(new Letter('*', 0));
+                                } else {
+                                    toExchange.add(putLetters[i][j]);
+                                }
     			}
     		}
     	}
