@@ -13,16 +13,35 @@ public class Dictionary {
     public Dictionary(){
     }
 
-    public Dictionary(InputStream stream, Alphabet alphabet) throws IOException  {
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+    public Dictionary(InputStream stream, Alphabet alphabet, Runnable afterLoaded) throws IOException  {
         tree = new Tree(alphabet);
+        final InputStream fStream = stream;
+        final Runnable fAfterLoaded = afterLoaded;
+        new Thread( new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    load(fStream);
+                    fAfterLoaded.run();
+                } catch (Exception e) {
+                }
+            }
+        }).start();
+    }
 
+    public Dictionary(InputStream stream, Alphabet alphabet) throws IOException {
+        this(stream, alphabet, new Runnable() {
+            @Override
+            public void run(){}
+        });
+    }
+
+    private void load(InputStream stream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         String word;
         while ((word = reader.readLine()) != null) {
             tree.insert(word);
         }
-
         reader.close();
     }
 

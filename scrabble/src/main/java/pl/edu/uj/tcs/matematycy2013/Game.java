@@ -12,6 +12,7 @@ public class Game {
 
     private Board board;
     private final Dictionary dictionary;
+    private boolean dictionaryLoaded;
     private final Alphabet alphabet;
     private Turn turn;
     private final Player player1;
@@ -29,7 +30,19 @@ public class Game {
 
     	config=conf;
         alphabet = new Alphabet(conf.getBagStream());
-        dictionary=new Dictionary(conf.getDictionaryStream(), alphabet);
+        dictionaryLoaded = false;
+        dictionary = new Dictionary(conf.getDictionaryStream(), alphabet, new Runnable() {
+            @Override
+            public void run() {
+                javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        dictionaryLoaded = true;
+                        setGUIState();
+                    }
+                });
+            }
+        });
         bag = new Bag(conf.getBagStream());
         board = new Board(conf.getBoardStream());
         player1 = new Player(conf.getPlayer1(),conf.getMaxTime());
@@ -68,7 +81,11 @@ public class Game {
     private void setGUIState() {
         switch (turn.state) {
             case WORD:
-                gui.wordState();
+                if (dictionaryLoaded) {
+                    gui.wordState();
+                } else {
+                    gui.invalidState();
+                }
                 break;
             case EXCHANGE:
                 gui.exchangeState();
