@@ -18,7 +18,7 @@ public class Dictionary {
         final InputStream fStream = stream;
         final Runnable fAfterLoaded = afterLoaded;
         new Thread( new Runnable() {
-            @Override
+           // @Override
             public void run() {
                 try {
                     load(fStream);
@@ -31,7 +31,7 @@ public class Dictionary {
 
     public Dictionary(InputStream stream, Alphabet alphabet) throws IOException {
         this(stream, alphabet, new Runnable() {
-            @Override
+          //  @Override
             public void run(){}
         });
     }

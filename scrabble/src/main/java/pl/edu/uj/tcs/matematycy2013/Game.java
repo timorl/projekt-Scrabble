@@ -32,10 +32,10 @@ public class Game {
         alphabet = new Alphabet(conf.getBagStream());
         dictionaryLoaded = false;
         dictionary = new Dictionary(conf.getDictionaryStream(), alphabet, new Runnable() {
-            @Override
+          //  @Override
             public void run() {
                 javax.swing.SwingUtilities.invokeLater(new Runnable() {
-                    @Override
+                  //  @Override
                     public void run() {
                         dictionaryLoaded = true;
                         setGUIState();
@@ -44,7 +44,7 @@ public class Game {
             }
         });
         bag = new Bag(conf.getBagStream());
-        board = new Board(conf.getBoardStream());
+        board = new Board(conf.getBoardStream(), conf.getBoardTorus());
         player1 = new Player(conf.getPlayer1(),conf.getMaxTime());
         player2 = new Player(conf.getPlayer2(),conf.getMaxTime());
         player1.setLetters(bag.getLetters(7));
