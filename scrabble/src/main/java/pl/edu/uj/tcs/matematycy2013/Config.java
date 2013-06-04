@@ -35,7 +35,13 @@ public class Config {
 
     public void setDefaultBoard(boolean isTorus) {
         standardBoard = true;
-        board = "defaultBoard.txt";
+        if(isTorus){
+        	board = "defaultBoardTorus.txt";
+        }
+        else{
+        	board = "defaultBoard.txt";
+        }
+        
         boardIsTorus = isTorus;
     }
 
