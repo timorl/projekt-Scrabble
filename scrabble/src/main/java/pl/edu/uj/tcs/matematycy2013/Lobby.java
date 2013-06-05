@@ -356,7 +356,7 @@ public class Lobby extends javax.swing.JFrame {
 
     private void player2Field1KeyTyped(java.awt.event.KeyEvent evt) {
         if (player2.getText().length() >= 10) {
-            player2.setText(player1.getText().substring(0, 9));
+            player2.setText(player2.getText().substring(0, 9));
         }
     }
     // Variables declaration - do not modify       
